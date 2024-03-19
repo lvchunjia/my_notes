@@ -1,10 +1,38 @@
 
 
+## Flutter SDK安装
 
+### dart SDK下载与安装
 
+*注意：fluttersdk默认带有dart，若无需使用命令行等执行dart文件则无需单独安装dart*
 
+下载：
 
+- [Dart 英文文档](https://dart.dev/)
+- [Dart 中文文档 | Dart](https://dart.cn/)
 
+### FlutterSDK 的下载与安装
+
+下载 FlutterSDK：
+
+- [flutter英文官网]([Flutter SDK archive | Flutter](https://docs.flutter.dev/release/archive?tab=macos))
+
+- [Flutter中文]([Using Flutter in China | Flutter](https://docs.flutter.dev/community/china))
+
+下载完后，解压到一个文件夹下
+
+### 配置环境变量
+
+将 `flutter\bin` 文件夹路径配置到 Path 环境变量中。
+
+在系统变量中配置官方提供的国内镜像
+
+```bash
+PUB_HOSTED_URL=https://pub.flutter-io.cn
+FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
+```
+
+执行 `flutter --version`，能给出结果，说明 Flutter 环境配置成功
 
 
 
