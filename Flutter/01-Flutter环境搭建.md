@@ -1,26 +1,39 @@
 
 
-[Flutter Version Manager (FVM): Flutter的版本管理终极指南_flutter版本管理工具-CSDN博客](https://blog.csdn.net/qq_28550263/article/details/136300307)
 
-## flutter 多版本管理 fvm
+
+
+
+
+
+
+
+## Flutter工具之多版本管理： fvm
+
+> 参考：[ flutter版本管理工具-CSDN博客](https://blog.csdn.net/qq_28550263/article/details/136300307)、[flutter 多版本管理 fvm-稀土掘金](https://juejin.cn/post/7219130999685611580)
+
+### 什么是FVM？
 
 fvm 通过引用每个项目使用的 Flutter SDK 版本来帮助满足一致的应用程序构建的需求。它还允许您安装多个 Flutter 版本，以便使用您的应用程序快速验证和测试即将发布的 Flutter 版本，而无需每次都等待 Flutter 安装
 
 fvm 可以两种模式使用 全局/虚拟环境
 
-### 为啥使用fvm
+### 为什么使用fvm
 
-- 不同的项目可能同时需要多个 Flutter SDK。
-- 测试新的 SDK 功能需要在Channels之间切换。
-- 版本切换很慢，每次都需要重新安装。
-- 无法保持应用程序中 SDK 的最新工作/使用版本。
-- Flutter 更新会影响所有 Flutter 项目。
-- 团队中开发人员之间的开发环境不一致。
+- 版本隔离
+  它允许为每个项目维护独立的 Flutter 版本，从而避免了不同项目之间可能出现的版本冲突问题。由于不同的项目可能依赖于不同的 Flutter 版本，版本隔离确保了项目之间的独立性，使得开发者可以根据项目的需要选择合适的 Flutter 版本进行开发和测试，而无需担心可能会因为版本不匹配而导致的问题。
+
+- 快速切换
+  通过简单的命令，开发者可以在不同的项目之间快速切换 Flutter 版本，而无需手动管理不同版本的 Flutter SDK，大大提高了开发效率和便捷性。
+
+- 节省空间
+  由于 FVM 允许共享相同版本的 Flutter SDK，并且只需下载一次即可在多个项目中使用，因此可以避免重复下载相同版本的 Flutter SDK，从而节省了存储空间。
 
 ### 安装 fvm
 
 - [从 GitHub 存储库下载](https://link.juejin.cn/?target=https%3A%2F%2Fgithub.com%2Fleoafarias%2Ffvm%2Freleases)
-- Windows下通过choco包管理器安装
+- 通过 pub 安装：`dart pub global activate fvm`
+- Windows下通过Chocolatey包管理器安装
 
 ```shell
 # 安装
@@ -38,27 +51,68 @@ brew uninstall fvm
 brew untap leoafarias/fvm
 ```
 
+安装完成后执行 `fvm--version` 检查是否成功，若
 
+### fvm环境变量配置
 
-### fvm配置
+安装fvm后，设置环境变量
 
-- 环境变量配置
+```shell
+# 以mac为例 ~/open .zshrc 打开脚本配置，添加
+# 可选：默认的 flutter SDK 缓存路径为 ~/fvm/versions
+export FVM_CACHE_PATH="$HOME/.fvm"
+# 全局flutter 配置（default为切换后的flutter版本软链接） 若以上未修改，则为将.fvm换为fvm
+export PATH=$HOME/.fvm/default/bin:$PATH
+# 可选：flutter 配置国内镜像（flutter中文开源社区镜像，也可选其它）
+export PUB_HOSTED_URL=https://pub.flutter-io.cn
+export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
+```
 
-  - 安装fvm后，设置环境变量 FVM_HOME 或 FVM_GIT_CACHE
+配置完环境变量后安装flutter并设为默认
 
-  ```shell
-  # 以mac为例
-  # 如果不设置，默认的 flutter SDK 缓存路径为 ~/fvm/versions
-  # ~/.zshrc
-  export FVM_CACHE_PATH="$HOME/.fvm"
-  # 全局flutter 配置（default为切换后的flutter版本软链接）
-  export PATH=$HOME/.fvm/default/bin:$PATH
-  # 常规flutter 配置
-  export PUB_HOSTED_URL=https://pub.flutter-io.cn
-  export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
-  ```
+```shell
+# 安装最新版稳定flutter版本
+fvm install stable
+# 设置为全局
+fvm global stable
+```
 
-IDE配置
+### 常用命令
+
+```shell
+# 查看现有远程版本
+fvm releases list
+# 安装flutter版本
+fvm install 3.7.10
+# 卸载flutter版本
+fvm remove 3.7.10
+# 查看本地已装的版本
+fvm list installed versions
+# 在程序根目录设置项目的flutter版本
+fvm use 3.7.10
+# 设置全局版本
+fvm global 3.7.10
+# 项目目录下执行，可获取当前的使用版本
+fvm list
+# 在当前项目目录下执行，可获取当前项目的flutter版本
+fvm flutter --version
+# 在当前项目目录下执行，清理项目缓存
+fvm flutter clean
+# 在当前项目目录下执行，获取依赖包
+fvm flutter pub get
+# 在当前项目目录下执行，项目运行
+fvm flutter run
+```
+
+### 配置git忽略
+
+在配置了fvm以后，在.fvm目录下会有一个flutter_sdk的链接文件，这个文件是不需要上传git的，否则会有冲突，在.gitignore文件中过滤一下。
+
+```bash
+/.fvm/flutter_sdk
+```
+
+### IDE配置
 
 - vscode
 
@@ -97,46 +151,9 @@ IDE配置
 
 - android studio
 
-  - preferences-》Flutter-》Flutter SDK path （填写绝对路径）
-    - 全局模式：/Users/mac/.fvm/default
-    - 虚拟环境模式（项目中所有的flutter命令需要用 fvm flutter替换）：/项目根目录绝对路径/.fvm/flutter_sdk
-
-### 常用命令
-
-```shell
-# 查看现有远程版本
-fvm releases list
-
-# 安装flutter版本
-fvm install 3.7.10
-
-# 卸载flutter版本
-fvm remove 3.7.10
-
-# 查看本地已装的版本
-fvm list installed versions
-
-# 在程序根目录设置flutter版本
-fvm use 3.7.10
-
-# 设置全局版本
-fvm global 3.7.10
-
-# 项目目录下执行，可获取当前的使用版本
-fvm list
-
-# 在当前项目目录下执行，可获取当前项目的flutter版本
-fvm flutter --version
-
-# 在当前项目目录下执行，清理项目缓存
-fvm flutter clean
-
-# 在当前项目目录下执行，获取依赖包
-fvm flutter pub get
-
-# 在当前项目目录下执行，项目运行
-fvm flutter run
-```
+  - preferences ==》Flutter ==》Flutter SDK path （填写绝对路径）
+    - 全局模式：/Users/mac/fvm/default
+    - 虚拟环境模式（项目中所有的flutter命令需要用 fvm flutter替换）：/项目根目录绝对路径/fvm/flutter_sdk
 
 ### 常见问题解决
 
@@ -172,28 +189,15 @@ git config --global https.proxy http://127.0.0.1:15732
 - 如果是`.bash`作为默认Shell,可以在终端中使用 `open -e .bash_profile` 命令打开文件
 - 如果是`.zsh`作为默认Shell，可以在终端中使用 `open .zshrc` 命令打开文件
 
-**fvm install xxx 报错**
+**`fvm install xxx` 报错**
 
 ```shell
 Exception: Git clone failed
 ```
 
+若install时报错且设置终端代理以及git代理地址都不生效，可尝试切换fvm安装方式
 
-
-
-
-
-
-
-
-
-
-
-
-> 作者：woodwen
-> 链接：https://juejin.cn/post/7219130999685611580
-> 来源：稀土掘金
-> 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+本人使用Homebrew安装后install报错如上，切换为dart pub安装后可正常使用
 
 
 
