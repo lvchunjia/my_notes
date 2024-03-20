@@ -25,7 +25,7 @@ class Person {
 
 在这个例子中，我们定义了一个名为 `Person` 的类，它有两个属性 `name` 和 `age`，还有一个方法 `sayHello`。
 
-## [#](https://www.coding-time.cn/dart/oop/类和对象.html#创建对象)**创建对象**
+## 2.创建对象
 
 创建类的实例（也就是对象），我们可以使用 `new` 关键字，然后调用类的构造函数。在 Dart 2 中，`new` 关键字是可选的：
 
@@ -36,7 +36,7 @@ person.age = 20;
 person.sayHello();
 ```
 
-## [#](https://www.coding-time.cn/dart/oop/类和对象.html#访问属性和方法)**访问属性和方法**
+## 3.访问属性和方法
 
 我们可以使用 `.` 符号来访问对象的属性和方法：
 
@@ -45,7 +45,7 @@ print(person.name);  // 输出 Alice
 person.sayHello();  // 输出 Hello, my name is Alice, I am 20 years old.
 ```
 
-## [#](https://www.coding-time.cn/dart/oop/类和对象.html#构造函数)**构造函数**
+## 4.构造函数
 
 在 Dart 中，构造函数的名称与类的名称相同，我们可以在构造函数中初始化对象的属性：
 
@@ -69,23 +69,20 @@ var person = Person('Alice', 20);
 person.sayHello();
 ```
 
-## [#](https://www.coding-time.cn/dart/oop/类和对象.html#this关键字的使用)**this关键字的使用**
+## 5.this关键字的使用
 
 在 Dart 中，`this` 关键字引用的是当前实例。我们可以在构造函数或其他方法中使用 `this` 关键字来访问当前对象的属性或方法。
 
-## [#](https://www.coding-time.cn/dart/oop/类和对象.html#getter和setter方法)**getter和setter方法**
+## 6.getter和setter方法
 
 在 Dart 中，我们可以使用 getter 和 setter 方法来读取和写入对象的属性：
 
 ```dart
 class Person {
-  String
-
- name;
+  String name;
   int age;
 
   String get greeting => 'Hello, my name is $name, I am $age years old.';
-  
   void set setName(String name) => this.name = name;
 }
 
@@ -94,7 +91,7 @@ person.setName = 'Alice';
 print(person.greeting);  // 输出 Hello, my name is Alice, I am null years old.
 ```
 
-## [#](https://www.coding-time.cn/dart/oop/类和对象.html#私有属性和方法)**私有属性和方法**
+## 7.私有属性和方法
 
 在 Dart 中，以 `_` 开头的属性和方法是私有的，不能在类的外部访问：
 
@@ -111,21 +108,15 @@ class Person {
 
 在上面的代码中，`_name`、`_age` 和 `_privateMethod` 都是私有的，只能在 `Person` 类内部访问。
 
-[在 GitHub 上编辑此页](https://github.com/linwu-hi/coding-time/edit/main/docs/dart/oop/类和对象.md)
 
 
+# 二、继承
 
-# 继承
-
-[linwu](https://www.coding-time.cn/)2023年7月9日大约 1 分钟
-
-------
-
-## [#](https://www.coding-time.cn/dart/oop/类的继承.html#继承的概念和用途)**继承的概念和用途**
+## 1.继承的概念和用途
 
 在面向对象编程中，继承是一种能够创建新类的方式，我们可以在新类中添加新的方法和字段，也可以对父类的方法进行覆写或扩展。
 
-## [#](https://www.coding-time.cn/dart/oop/类的继承.html#子类和父类)**子类和父类**
+## 2.子类和父类
 
 在 Dart 中，我们可以使用 `extends` 关键字来创建一个子类：
 
@@ -149,7 +140,7 @@ cat.meow();  // 输出 Meow...
 
 在这个例子中，`Cat` 类是 `Animal` 类的子类，因此 `Cat` 类的对象可以访问 `Animal` 类的所有公有方法。
 
-## [#](https://www.coding-time.cn/dart/oop/类的继承.html#使用super关键字访问父类)**使用super关键字访问父类**
+## 3.使用super关键字访问父类
 
 在 Dart 中，我们可以使用 `super` 关键字来访问父类的方法：
 
@@ -176,7 +167,7 @@ cat.eat();
 
 在这个例子中，`Cat` 类覆写了 `Animal` 类的 `eat` 方法，并在 `Cat` 类的 `eat` 方法中使用 `super.eat()` 来调用 `Animal` 类的 `eat` 方法。
 
-## [#](https://www.coding-time.cn/dart/oop/类的继承.html#方法覆写)**方法覆写**
+## 4.方法覆写
 
 如果子类和父类有同名的方法，那么在子类中的方法会覆写父类中的方法：
 
@@ -200,17 +191,9 @@ cat.eat();  // 输出 Cat eating...
 
 **使用@override注解**,在 Dart 中，我们可以使用 `@override` 注解来表示子类的方法覆写了父类的方法。这是一种良好的编程习惯，可以提高代码的可读性。
 
-[在 GitHub 上编辑此页open in new window](https://github.com/linwu-hi/coding-time/edit/main/docs/dart/oop/类的继承.md)
 
 
-
-
-
-# 多态
-
-[linwu](https://www.coding-time.cn/)2023年7月9日大约 2 分钟
-
-------
+# 三、多态
 
 多态是面向对象编程的三大特性之一（封装、继承和多态）。在 Dart 中，多态表现为父类引用指向子类对象。这样，父类的引用就可以根据当前指向的子类对象，动态地调用其相应的方法，这是面向对象非常重要的一个特性。
 
@@ -245,7 +228,7 @@ feedAnimal(dog);  // 输出 Dog eating...
 
 在上述例子中，`feedAnimal` 函数接受一个 `Animal` 类型的参数，然而在运行时，这个参数可以是任何一个 `Animal` 的子类的实例。这就是多态的体现。
 
-## [#](https://www.coding-time.cn/dart/oop/多态.html#抽象类)**抽象类**
+## 1.抽象类
 
 在 Dart 中，抽象类是一种特殊的类，它不能被实例化。抽象类用于定义一些基本的结构，而具体的实现则由继承抽象类的子类来完成。抽象类使用 `abstract` 关键字来定义。
 
@@ -264,7 +247,7 @@ class Cat extends Animal {
 
 在上述例子中，`Animal` 是一个抽象类，它定义了一个抽象方法 `eat`。`Cat` 类继承了 `Animal` 类，并提供了 `eat` 方法的具体实现。
 
-## [#](https://www.coding-time.cn/dart/oop/多态.html#接口)**接口**
+## 2.接口
 
 Dart 中没有专门的接口关键字，类可以作为接口被其他类实现。实现接口需要使用 `implements` 关键字。
 
@@ -287,25 +270,17 @@ class Cat implements Animal {
 
 这样我们就初步介绍了 Dart 中面向对象编程的主要概念和用法。实际上，Dart 中面向对象的特性还有很多，例如工厂构造函数、静态成员、Mixins 等。这些内容需要我们在日常的学习和实践中不断深入理解和掌握。
 
-[在 GitHub 上编辑此页](https://github.com/linwu-hi/coding-time/edit/main/docs/dart/oop/多态.md)
 
 
-
-
-
-# 更多特性
-
-[linwu](https://www.coding-time.cn/)2023年7月9日大约 3 分钟
-
-------
-
-## [#](https://www.coding-time.cn/dart/oop/更多特性.html#引言)引言
+# 四、更多特性
 
 除了前面介绍的类、对象、继承、多态、抽象类和接口之外，Dart语言还提供了一些其他的面向对象的特性。这些特性可以帮助开发者更好地组织和设计他们的代码，增加代码的灵活性和可复用性。本文将深入探讨Dart中的工厂构造函数、静态成员和Mixins这些特性。
 
-一、工厂构造函数 Dart中的工厂构造函数（Factory Constructor）是一种特殊类型的构造函数，它可以返回对象的实例，而不一定是类的实例。工厂构造函数通常用于创建复杂对象或在创建对象时执行额外的逻辑。
+## 1.工厂构造函数 
 
-在类中定义工厂构造函数需要使用`factory`关键字，并且必须返回一个对象。以下是一个使用工厂构造函数的示例：
+Dart中的工厂构造函数（Factory Constructor）是一种特殊类型的构造函数，它可以返回对象的实例，而不一定是类的实例。工厂构造函数通常用于创建复杂对象或在创建对象时执行额外的逻辑。
+
+在类中定义工厂构造函数需要使用`factory`关键字，并且必须返回一个对象。
 
 ```dart
 class Logger {
@@ -340,7 +315,7 @@ void main() {
 
 在上面的示例中，`Logger`类中定义了一个工厂构造函数`factory Logger(String name)`，用于创建`Logger`对象。通过使用工厂构造函数和静态成员变量`_cache`，我们可以确保相同名称的`Logger`对象只被创建一次。
 
-## [#](https://www.coding-time.cn/dart/oop/更多特性.html#二、静态成员)二、静态成员
+## 2.静态成员
 
 静态成员是属于类本身而不是类的实例的成员。可以通过在成员前面加上`static`关键字来定义静态成员。静态成员在类的所有实例之间共享，并且可以通过类名直接访问，无需创建类的实例。
 
@@ -365,7 +340,7 @@ void main() {
 
 在上述示例中，`MathUtils`类中定义了一个静态变量`pi`和一个静态方法`calculateArea`。我们可以直接通过类名访问静态变量和调用静态方法。
 
-## [#](https://www.coding-time.cn/dart/oop/更多特性.html#三、mixins)三、Mixins
+## 3.Mixins
 
 Mixins 是一种在 Dart 中实现代码重用和组合的方式。通过使用 mixins，我们可以将一个或多个类的功能合并到一个类中，以便可以复用这些功能，而无需继承类。
 
@@ -399,14 +374,6 @@ void main() {
 ```
 
 在上述示例中，我们定义了两个 mixins：`CanFly` 和 `CanSwim`，它们分别具有 `fly()` 和 `swim()` 方法。然后，我们创建了一个名为 `Duck` 的类，并将 mixins 应用到 `Duck` 类中。通过使用 mixins，`Duck` 类获得了 `CanFly` 和 `CanSwim` 类中的功能，并实现了自己的方法 `quack()`。
-
-## [#](https://www.coding-time.cn/dart/oop/更多特性.html#总结)总结：
-
-通过工厂构造函数、静态成员和 mixins 这些特性，我们可以更加灵活地组织和设计我们的 Dart 代码。工厂构造函数允许我们在创建对象时执行额外的逻辑，静态成员允许我们在类的实例之间共享数据和方法，而 mixins 则允许我们实现代码的复用和组合。这些特性使得 Dart 在面向对象编程方面更加强大和灵活。
-
-[在 GitHub 上编辑此页](https://github.com/linwu-hi/coding-time/edit/main/docs/dart/oop/更多特性.md)
-
-
 
 
 
