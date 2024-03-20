@@ -1,6 +1,6 @@
 
 
-## Flutter SDK安装
+## 一、Flutter SDK安装
 
 ### dart SDK下载与安装
 
@@ -36,7 +36,7 @@ FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
 
 
 
-## Flutter工具之多版本管理： fvm
+## 二、Flutter工具之多版本管理： fvm
 
 > 参考：[ flutter版本管理工具-CSDN博客](https://blog.csdn.net/qq_28550263/article/details/136300307)、[flutter 多版本管理 fvm-稀土掘金](https://juejin.cn/post/7219130999685611580)
 
