@@ -2,17 +2,11 @@
 
 
 
-# Dart模块化详解
-
-[linwu](https://www.coding-time.cn/)2023年7月9日大约 2 分钟
-
-------
+# 一、Dart模块化
 
 在大型软件项目中，模块化是必不可少的，它可以帮助我们更好地组织和管理代码，提高代码的可读性和可维护性。在Dart中，模块化是通过库（libraries）来实现的。
 
-## [#](https://www.coding-time.cn/dart/advance/Dart模块化.html#库的定义与使用)库的定义与使用
-
-> 这里简单做个介绍，下一章节会重点分析
+## 1.库的定义与使用
 
 Dart库是一种代码模块，它可以包含变量、函数、类和其他代码。一个库在其它库中通过`import`关键字导入后，库中的代码就可以被使用。
 
@@ -28,7 +22,7 @@ import 'dart:io';
 import 'package:my_package/my_library.dart';
 ```
 
-## [#](https://www.coding-time.cn/dart/advance/Dart模块化.html#创建自定义库)创建自定义库
+## 2.创建自定义库
 
 你可以创建自己的Dart库，一个库就是一个Dart源文件。该文件可以包含一些函数和类的定义。例如，你可以创建一个文件`my_library.dart`：
 
@@ -59,7 +53,7 @@ void main() {
 }
 ```
 
-## [#](https://www.coding-time.cn/dart/advance/Dart模块化.html#导入库的一部分)导入库的一部分
+## 3.导入库的一部分
 
 有时，我们可能只需要使用库中的某一部分代码。这时，我们可以使用`show`关键字来只导入需要的部分：
 
@@ -73,7 +67,7 @@ import 'my_library.dart' show MyClass; // 只导入MyClass
 import 'my_library.dart' hide myFunction; // 导入my_library，但不包括myFunction
 ```
 
-## [#](https://www.coding-time.cn/dart/advance/Dart模块化.html#延迟加载-lazy-loading)延迟加载（Lazy Loading）
+## 4.延迟加载（Lazy Loading）
 
 Dart也支持延迟加载，也被称为懒加载，可以在需要时再加载和初始化模块。延迟加载可以提高应用的启动速度。你可以使用`deferred as`关键字来标记延迟加载的库：
 
@@ -89,25 +83,15 @@ void main() {
 
 在上述代码中，`someLibrary`将在`loadLibrary()`函数调用后才会被加载。在库加载完成后，`someFunction()`才会被调用。
 
-[在 GitHub 上编辑此页](https://github.com/linwu-hi/coding-time/edit/main/docs/dart/advance/Dart模块化.md)
 
 
-
-
-
-# Dart库的使用和创建
-
-[linwu](https://www.coding-time.cn/)2023年7月9日大约 3 分钟
-
-------
-
-## [#](https://www.coding-time.cn/dart/advance/Dart库的使用和创建.html#引言)引言
+# 二、Dart库的使用和创建
 
 在Dart中，代码重用和模块化可以通过库（libraries）和包（packages）实现。一个库就是一组代码，被一起打包为了实现一种或多种特定功能。一个包则是一种发布和分享Dart库的方式。在这一章，我们将详细介绍如何使用和创建Dart库和包，以及如何实现一个具有大数相加功能的库。
 
-## [#](https://www.coding-time.cn/dart/advance/Dart库的使用和创建.html#dart库的使用)Dart库的使用
+## 1.Dart库的使用
 
-### [#](https://www.coding-time.cn/dart/advance/Dart库的使用和创建.html#导入库)导入库
+**导入库**
 
 在Dart中，我们通过import关键字导入库。例如，要导入Dart的内置库dart:math，我们可以这样做：
 
@@ -121,7 +105,7 @@ import 'dart:math';
 import 'package:my_app/big_numbers.dart';
 ```
 
-### [#](https://www.coding-time.cn/dart/advance/Dart库的使用和创建.html#使用库中的函数和类)使用库中的函数和类
+**使用库中的函数和类**
 
 导入库之后，就可以使用库中定义的函数和类了。例如，dart:math库中有一个sqrt函数，我们可以这样使用它：
 
@@ -129,13 +113,13 @@ import 'package:my_app/big_numbers.dart';
 var squareRoot = sqrt(16);  // 输出：4.0
 ```
 
-## [#](https://www.coding-time.cn/dart/advance/Dart库的使用和创建.html#dart库的创建)Dart库的创建
+## 2.Dart库的创建
 
-### [#](https://www.coding-time.cn/dart/advance/Dart库的使用和创建.html#创建库文件)创建库文件
+**创建库文件**
 
-我们首先需要创建一个新的.dart文件。这个文件就是我们的库文件。例如，我们可以创建一个名为'big_numbers.dart'的文件。
+我们首先需要创建一个新的.dart文件。这个文件就是我们的库文件。例如，我们可以创建一个名为`big_numbers.dart`的文件。
 
-### [#](https://www.coding-time.cn/dart/advance/Dart库的使用和创建.html#定义库)定义库
+**定义库**
 
 在这个文件中，我们首先需要使用library关键字定义我们的库：
 
@@ -151,7 +135,7 @@ String addBigNumbers(String num1, String num2) {
 }
 ```
 
-### [#](https://www.coding-time.cn/dart/advance/Dart库的使用和创建.html#导出库)导出库
+**导出库**
 
 如果我们的库中有一些函数和类是希望被其他库使用的，我们需要使用export关键字导出它们：
 
@@ -161,9 +145,9 @@ export 'src/big_numbers.dart';
 
 注意，只有导出的函数和类才能被其他库使用。
 
-## [#](https://www.coding-time.cn/dart/advance/Dart库的使用和创建.html#实现一个大数相加的库)实现一个大数相加的库
+## 3.实现一个大数相加的库
 
-在我们的'big_numbers.dart'库中，我们现在来实现一个大数相加的函数。我们首先需要了解一下大数相加的基本思想：
+在我们的`big_numbers.dart`库中，我们现在来实现一个大数相加的函数。我们首先需要了解一下大数相加的基本思想：
 
 对于大数相加，我们不能直接使用普通的加法运算，因为数字太大可能会溢出。因此，我们需要将大数转换为字符串，然后按位进行相加。
 
@@ -200,13 +184,13 @@ String addBigNumbers(String num1, String num2) {
 }
 ```
 
-## [#](https://www.coding-time.cn/dart/advance/Dart库的使用和创建.html#dart包的创建和发布)Dart包的创建和发布
+## 4.Dart包的创建和发布
 
-我们已经创建了一个'big_numbers.dart'库，现在我们可以将它打包为一个Dart包，并发布到pub.dev。
+我们已经创建了一个`big_numbers.dart`库，现在我们可以将它打包为一个Dart包，并发布到pub.dev。
 
-### [#](https://www.coding-time.cn/dart/advance/Dart库的使用和创建.html#创建一个pubspec-yaml文件)创建一个pubspec.yaml文件
+**创建一个`pubspec.yaml`文件**
 
-首先，我们需要创建一个pubspec.yaml文件，这个文件用于描述我们的包的信息，包括名称、版本、描述等等。
+首先，我们需要创建一个`pubspec.yaml`文件，这个文件用于描述我们的包的信息，包括名称、版本、描述等等。
 
 ```yaml
 name: big_numbers
@@ -228,7 +212,7 @@ flutter:
   uses-material-design: true
 ```
 
-### [#](https://www.coding-time.cn/dart/advance/Dart库的使用和创建.html#发布包)发布包
+**发布包**
 
 然后，我们可以使用pub命令发布我们的包：
 
@@ -238,25 +222,17 @@ dart pub publish
 
 注意，在发布包之前，我们需要确保我们已经注册了一个pub.dev的账号，并且在我们的计算机上配置了pub的认证信息。
 
-[在 GitHub 上编辑此页](https://github.com/linwu-hi/coding-time/edit/main/docs/dart/advance/Dart库的使用和创建.md)
 
 
-
-
-
-# Dart的命令行和Web编程
-
-[linwu](https://www.coding-time.cn/)2023年7月9日大约 2 分钟
-
-------
+# 三、Dart的命令行和Web编程
 
 Dart是一个多平台的语言，它支持命令行编程和Web编程。下面是这两种编程方式的一些基础知识。
 
-## [#](https://www.coding-time.cn/dart/advance/Dart的命令行和Web编程.html#dart的命令行编程)Dart的命令行编程
+## 1.Dart的命令行编程
 
 在命令行编程中，我们主要使用`dart:io`库，这个库提供了一些与文件系统交互、网络编程、进程管理等功能的类和函数。
 
-### [#](https://www.coding-time.cn/dart/advance/Dart的命令行和Web编程.html#读取和写入文件)读取和写入文件
+**读取和写入文件**
 
 下面是一个例子，演示如何在Dart中读取和写入文件：
 
@@ -275,7 +251,7 @@ void main() async {
 }
 ```
 
-### [#](https://www.coding-time.cn/dart/advance/Dart的命令行和Web编程.html#网络编程)网络编程
+**网络编程**
 
 `dart:io`库还提供了一些类来进行HTTP和WebSocket编程。下面是一个简单的HTTP客户端的例子：
 
@@ -295,11 +271,11 @@ void main() async {
 }
 ```
 
-## [#](https://www.coding-time.cn/dart/advance/Dart的命令行和Web编程.html#dart的web编程)Dart的Web编程
+## 2.Dart的Web编程
 
 Dart也可以用于构建高质量的Web应用。在Web编程中，我们通常使用`dart:html`库，这个库提供了一些与DOM交互、处理事件、创建HTML元素等功能的类和函数。
 
-### [#](https://www.coding-time.cn/dart/advance/Dart的命令行和Web编程.html#操作dom)操作DOM
+**操作DOM**
 
 下面是一个例子，演示如何在Dart中操作DOM：
 
@@ -318,7 +294,7 @@ void main() {
 // <h1 id="title">Welcome to Dart</h1>
 ```
 
-### [#](https://www.coding-time.cn/dart/advance/Dart的命令行和Web编程.html#处理事件)处理事件
+**处理事件**
 
 我们还可以在Dart中处理各种用户事件，例如点击事件：
 
@@ -337,11 +313,11 @@ void main() {
 // <button id="button">Click me</button>
 ```
 
-## [#](https://www.coding-time.cn/dart/advance/Dart的命令行和Web编程.html#dart编译成javascript)Dart编译成JavaScript
+## 3.Dart编译成JavaScript
 
 Dart语言可以被编译成JavaScript，这使得Dart能在所有的现代浏览器中运行，无论是桌面浏览器还是移动设备浏览器。Dart提供了`dart2js`和`dartdevc`两种编译工具，分别用于生产环境和开发环境。
 
-### [#](https://www.coding-time.cn/dart/advance/Dart的命令行和Web编程.html#dart2js)dart2js
+**dart2js**
 
 `dart2js`是一个强大的工具，它可以将Dart代码编译成高效的、压缩的、部署就绪的JavaScript代码。通常我们在准备部署我们的Dart web应用到生产环境时使用`dart2js`。
 
@@ -353,7 +329,7 @@ dart2js -O2 -o main.dart.js main.dart
 
 这个命令会将`main.dart`编译成`main.dart.js`，并且使用了`-O2`优化选项。
 
-### [#](https://www.coding-time.cn/dart/advance/Dart的命令行和Web编程.html#dartdevc)dartdevc
+**dartdevc**
 
 `dartdevc`（Dart Development Compiler）是另一个Dart到JavaScript的编译器，主要用于开发环境。相比于`dart2js`，`dartdevc`生成的JavaScript代码更易于调试，但是不如`dart2js`生成的代码运行效率高。
 
@@ -365,25 +341,13 @@ webdev serve
 
 然后你就可以在浏览器中打开你的应用，地址通常是`localhost:8080`。
 
-[在 GitHub 上编辑此页open in new window](https://github.com/linwu-hi/coding-time/edit/main/docs/dart/advance/Dart的命令行和Web编程.md)
 
 
-
-
-
-
-
-# Dart中使用JSON
-
-[linwu](https://www.coding-time.cn/)2023年7月9日大约 4 分钟
-
-------
-
-# [#](https://www.coding-time.cn/dart/advance/Dart中使用JSON.html#第九章-dart中使用json)第九章：Dart中使用JSON
+# 四、Dart中使用JSON
 
 JSON (JavaScript Object Notation) 是一种轻量级的数据交换格式，它基于JavaScript的一个子集。在Dart中，你可以使用`dart:convert`库来进行JSON的编码和解码。
 
-## [#](https://www.coding-time.cn/dart/advance/Dart中使用JSON.html#_9-1-json编码)9.1 JSON编码
+## 1.JSON编码
 
 你可以使用`jsonEncode`函数将一个`Dart对象`转换为JSON字符串。例如：
 
@@ -428,7 +392,7 @@ void main() {
 }
 ```
 
-## [#](https://www.coding-time.cn/dart/advance/Dart中使用JSON.html#_9-2-json解码)9.2 JSON解码
+## 2.JSON解码
 
 你可以使用`jsonDecode`函数将一个JSON字符串转换为Dart对象。例如：
 
@@ -467,9 +431,9 @@ void main() {
 }
 ```
 
-## [#](https://www.coding-time.cn/dart/advance/Dart中使用JSON.html#使用json-serializable)使用json_serializable
+## 3.使用json_serializable
 
-在上一部分中，我们介绍了如何手动将JSON转换为Dart对象。然而，当你处理复杂的JSON数据时，手动转换可能会变得繁琐并且容易出错。因此，你可能会想使用代码生成库来自动完成这部分工作。在Dart中，有一种非常流行的库就是`json_serializable`。
+当处理复杂的JSON数据时，手动转换可能会变得繁琐并且容易出错。因此，你可能会想使用代码生成库来自动完成这部分工作。在Dart中，有一种非常流行的库就是`json_serializable`。
 
 要使用`json_serializable`，你首先需要在`pubspec.yaml`文件中添加相关的依赖：
 
@@ -535,7 +499,7 @@ void main() {
 
 `json_serializable`提供了许多其他的功能，例如处理嵌套的模型、使用自定义的日期格式、处理枚举类型等。要了解更多信息，你可以查看其官方文档。
 
-## [#](https://www.coding-time.cn/dart/advance/Dart中使用JSON.html#实践)实践
+## 4.实践
 
 > 实际开发中，我们会将接口拿到的JSON数据转化为Dart 类 (通常被称为模型或数据类)
 
@@ -546,29 +510,21 @@ void main() {
 3. **易于操作**：使用 Dart 类来处理 JSON 数据，你可以使用 Dart 的各种特性，例如方法、计算属性等。此外，许多 Dart 库和框架，例如 Flutter，需要使用 Dart 类来工作。
 4. **自动补全和文档**：在 Dart 类中，你可以使用文档注释来说明每个字段的用途。而在 IDE 中，当你输入一个对象和一个点 (.) 时，IDE 就会显示出所有可用的字段和方法，这可以提高开发效率。
 
-[在 GitHub 上编辑此页](https://github.com/linwu-hi/coding-time/edit/main/docs/dart/advance/Dart中使用JSON.md)
 
 
-
-
-
-# Dart的异步编程
-
-[linwu](https://www.coding-time.cn/)2023年7月9日大约 2 分钟
-
-------
+# 五、Dart的异步编程
 
 在 Dart 中，我们使用 `Future` 和 `async`/`await` 来进行异步编程。当你调用一个异步函数时，它将立即返回一个 `Future` 对象。当异步操作完成时，`Future` 将被“完成”或“解析”。
 
-## [#](https://www.coding-time.cn/dart/advance/Dart的异步编程.html#使用-future)使用 Future
+## 1.使用 Future
 
 Future 是 Dart 中用于表示异步操作的对象。当你调用一个异步函数时，它会立即返回一个 Future 对象，表示这个异步操作的结果。
 
 Future 对象有三种状态：
 
-未完成：异步操作还没有完成。 完成（resolved）：异步操作成功完成，并返回一个值。 错误（rejected）：异步操作失败，并返回一个错误。
-
-> 如果你了解Javascript中的Promise，那么就能非常简单掌握Future了
+- 未完成：异步操作还没有完成。 
+- 完成（resolved）：异步操作成功完成，并返回一个值。 
+- 错误（rejected）：异步操作失败，并返回一个错误。
 
 一个简单的 `Future` 示例如下：
 
@@ -588,7 +544,7 @@ void main() {
 
 在这个示例中，`fetchUserOrder` 是一个异步函数，它使用 `Future.delayed` 来模拟网络延迟。当调用 `fetchUserOrder` 时，它立即返回一个 `Future<String>` 对象。然后我们使用 `then` 和 `catchError` 来处理 `Future` 的成功和错误结果。
 
-## [#](https://www.coding-time.cn/dart/advance/Dart的异步编程.html#使用-async-await)使用 async/await
+## 2.使用 async/await
 
 你也可以使用 `async`/`await` 关键字来更简洁地处理异步操作。一个使用 `async`/`await` 的示例如下：
 
@@ -612,25 +568,15 @@ Future<void> main() async {
 
 需要注意的是，你只能在 `async` 函数中使用 `await` 关键字。
 
-[在 GitHub 上编辑此页](https://github.com/linwu-hi/coding-time/edit/main/docs/dart/advance/Dart的异步编程.md)
 
 
-
-
-
-
-
-# 事件循环和协程机制
-
-[linwu](https://www.coding-time.cn/)2023年7月9日大约 9 分钟
-
-------
+# 六、事件循环和协程机制
 
 > Dart实现异步的方式同Javascript类似，如果你掌握Javascript的事件循环机制，那么学习Dart的异步机制就非常简单了
 
 在 Dart 中，事件循环和协程是实现异步编程的核心机制。它们使得我们能够以非阻塞的方式处理异步操作，并允许在异步操作期间暂停和继续执行代码。本文将深入探讨 Dart 的事件循环和协程机制，并结合代码示例进行详细说明。
 
-## [#](https://www.coding-time.cn/dart/advance/事件循环和协程机制.html#协程-coroutine)协程（Coroutine）
+## 1.协程（Coroutine）
 
 协程是一种轻量级的线程，它可以在程序内部进行切换，而不需要依赖操作系统的线程管理。在 Dart 中，协程的实现是通过异步函数和 await 关键字来实现的。
 
@@ -654,15 +600,22 @@ Future<String> fetchData() {
 
 当涉及到 Dart 的事件循环时，可以结合事件队列、宏任务、微任务和协程的概念来完善整体的事件循环。下面是对事件循环的完善描述：
 
-## [#](https://www.coding-time.cn/dart/advance/事件循环和协程机制.html#事件循环-event-loop)事件循环（Event Loop）
+## 2.事件循环（Event Loop）
 
 Dart 的事件循环是一个基于事件驱动的循环机制，用于处理异步操作和事件处理。它包括以下组件：事件队列、宏任务队列、微任务队列、IO 事件处理器和异步任务处理器等。
 
 事件循环的完整流程如下：
 
-1.初始化事件循环，并创建事件队列、宏任务队列和微任务队列。 2. 事件循环从事件队列中取出一个事件。 3. 如果是微任务（如 Future.then() 回调函数），将微任务添加到微任务队列中。 4. 如果是宏任务（如定时器事件、IO 事件、用户交互事件等），将宏任务添加到宏任务队列中。 5. 事件循环首先处理微任务队列中的所有微任务，确保微任务在当前事件循环中优先执行。 6. 微任务队列中的所有微任务都处理完毕后，事件循环开始处理宏任务队列中的宏任务。 7. 事件循环处理宏任务，执行相应的回调函数，并等待宏任务完成。 8. 宏任务处理完成后，事件循环回到步骤2，继续处理下一个事件,事件循环在整个过程中不断循环，直到事件队列为空或程序终止
+1. 初始化事件循环，并创建事件队列、宏任务队列和微任务队列。 
+2. 事件循环从事件队列中取出一个事件。 
+3. 如果是微任务（如 Future.then() 回调函数），将微任务添加到微任务队列中。 
+4. 如果是宏任务（如定时器事件、IO 事件、用户交互事件等），将宏任务添加到宏任务队列中。 
+5. 事件循环首先处理微任务队列中的所有微任务，确保微任务在当前事件循环中优先执行。 
+6. 微任务队列中的所有微任务都处理完毕后，事件循环开始处理宏任务队列中的宏任务。
+7. 事件循环处理宏任务，执行相应的回调函数，并等待宏任务完成。 
+8. 宏任务处理完成后，事件循环回到步骤2，继续处理下一个事件,事件循环在整个过程中不断循环，直到事件队列为空或程序终止
 
-![事件循环流程图](assets/event-loop.png)事件循环流程图
+![事件循环流程图](assets/event-loop.png)
 
 通过微任务队列的处理机制，Dart 确保了在事件循环的每一轮中，微任务能够优先得到处理。这保证了微任务的及时执行，并避免了某些异步任务被延迟处理的情况。
 
@@ -697,7 +650,7 @@ Future<String> fetchData() {
 
 在上面的示例中，我们向事件队列中添加了一个定时器事件、一个 IO 事件和一个异步任务。在事件循环的处理过程中，定时器事件会在指定的延迟时间后触发，IO 事件会在文件读取完成后执行回调函数，异步任务会在 Future 完成后传递结果。
 
-## [#](https://www.coding-time.cn/dart/advance/事件循环和协程机制.html#协程-coroutine-1)协程（Coroutine）
+## 3.协程（Coroutine）
 
 协程是一种轻量级的线程，它可以在程序内部进行切换，而不需要依赖操作系统的线程管理。在 Dart 中，协程的实现是通过异步函数和 await 关键字来实现的。
 
@@ -725,11 +678,11 @@ Future<String> fetchData() {
 
 在上面的示例中，main() 函数被标记为异步函数，使用 async 关键字进行标记。在异步函数中，我们使用 await 关键字等待 fetchData() 函数的结果。在等待期间，协程会暂停执行，并将控制权返回给事件循环。一旦 Future 完成并返回结果，协程恢复执行，并打印出结果。
 
-## [#](https://www.coding-time.cn/dart/advance/事件循环和协程机制.html#宏任务队列-macrotask-queue)宏任务队列（Macrotask Queue））
+## 4.宏任务队列（Macrotask Queue））
 
 在 Dart 中，宏任务（Macrotask）是指需要在事件循环的下一轮执行的任务。与微任务不同，宏任务的执行发生在微任务队列处理完毕后。以下是一些常见的宏任务：
 
-### [#](https://www.coding-time.cn/dart/advance/事件循环和协程机制.html#_1-定时器事件)1. 定时器事件
+**定时器事件**
 
 通过 Timer 类创建的定时器事件是宏任务。可以使用 Timer 类的方法（如 Timer.run()、Timer.periodic()、Timer(Duration, callback)）来创建定时器事件，并在指定的延迟时间后执行回调函数。
 
@@ -747,7 +700,7 @@ void main() {
 
 在上面的示例中，通过 Timer 类创建的定时器事件会在指定的延迟时间后作为宏任务执行。
 
-### [#](https://www.coding-time.cn/dart/advance/事件循环和协程机制.html#_2-io-事件)2. IO 事件
+**IO 事件**
 
 包括文件读写、网络请求等异步操作。当执行这些异步操作时，相应的 IO 事件会被触发，然后作为宏任务在事件循环的下一轮执行。
 
@@ -767,7 +720,7 @@ void main() {
 
 在上面的示例中，文件读取的 IO 事件会在文件读取完成后作为宏任务执行。
 
-### [#](https://www.coding-time.cn/dart/advance/事件循环和协程机制.html#_3-ui-事件)3. UI 事件
+**UI 事件**
 
 在 Flutter 应用程序中，用户交互（如点击按钮、滑动屏幕等）触发的事件也是宏任务。这些 UI 事件会被放入事件队列，并在事件循环的下一轮执行。
 
@@ -806,7 +759,7 @@ class MyApp extends StatelessWidget {
 
 通过宏任务，我们可以在 Dart 中处理一些需要在下一轮事件循环执行的任务，例如定时器事件、IO 事件和用户交互事件。这使得我们可以在合适的时机执行这些任务，并保持事件循环的稳定性和性能。
 
-## [#](https://www.coding-time.cn/dart/advance/事件循环和协程机制.html#微任务队列-microtask-queue)微任务队列（Microtask Queue）
+## 5.微任务队列（Microtask Queue）
 
 Dart 中的微任务队列用于处理异步任务的回调函数。它保证异步任务的回调函数能够及时执行。常见的微任务包括 Future.then()、async/await 的回调等。
 
@@ -832,29 +785,11 @@ void main() {
 
 综上所述，Dart 的事件循环、协程和微任务队列相互配合，实现了高效的异步编程机制。事件循环负责处理各种事件，协程允许代码在异步操作期间暂停和继续执行，微任务队列保证异步任务的回调函数能够及时执行。这些机制的结合使得 Dart 能够实现高性能和灵活的异步编程。
 
-## [#](https://www.coding-time.cn/dart/advance/事件循环和协程机制.html#微任务队列-microtask-queue-1)微任务队列（Microtask Queue）
 
-Dart 中的微任务队列用于处理异步任务的回调函数。它保证异步任务的回调函数能够及时执行。常见的微任务包括 Future.then()、async/await 的回调等。
 
-```dart
-void main() {
-  print('Start');
+**常见的微任务**
 
-  Future.microtask(() => print('Microtask 1'));
-
-  Future.delayed(Duration(seconds: 1), () {
-    print('Async event');
-  });
-
-  Future.microtask(() => print('Microtask 2'));
-
-  print('End');
-}
-```
-
-### [#](https://www.coding-time.cn/dart/advance/事件循环和协程机制.html#常见的微任务)常见的微任务
-
-#### [#](https://www.coding-time.cn/dart/advance/事件循环和协程机制.html#_1-future-then-回调)1. Future.then() 回调
+- Future.then() 回调
 
 当一个 Future 完成时，可以使用 Future.then() 方法添加回调函数。这些回调函数会被添加到微任务队列中，并在当前事件循环中的微任务阶段执行。
 
@@ -864,7 +799,7 @@ Future.delayed(Duration(seconds: 1)).then((value) {
 });
 ```
 
-#### [#](https://www.coding-time.cn/dart/advance/事件循环和协程机制.html#_2-async-await-的回调)2. async/await 的回调
+- async/await 的回调
 
 使用 async/await 语法编写的异步函数中，await 表达式会等待一个 Future 的完成，并在当前事件循环中的微任务阶段恢复执行。
 
@@ -876,7 +811,7 @@ void main() async {
 }
 ```
 
-#### [#](https://www.coding-time.cn/dart/advance/事件循环和协程机制.html#_3-schedulemicrotask-函数)3. scheduleMicrotask() 函数
+- scheduleMicrotask() 函数
 
 可以使用 scheduleMicrotask() 函数将一个回调函数添加到微任务队列中，以确保它在当前事件循环的微任务阶段执行。
 
@@ -893,15 +828,9 @@ void main() {
 
 请注意，与微任务相对的是宏任务（例如定时器事件、IO 事件等），宏任务的执行会在微任务之后进行。因此，在事件循环的每一轮中，`微任务先于宏任务执行`。
 
-[在 GitHub 上编辑此页](https://github.com/linwu-hi/coding-time/edit/main/docs/dart/advance/事件循环和协程机制.md)
 
 
-
-# Dart的Stream
-
-[linwu](https://www.coding-time.cn/)2023年7月9日大约 4 分钟
-
-------
+# 七、Dart的Stream
 
 Stream 是 Dart 中处理连续的异步事件的工具。例如，你可以使用 Stream 来读取文件的内容，或者监听用户的鼠标点击。
 
@@ -944,7 +873,7 @@ Future<void> main() async {
 }
 ```
 
-## [#](https://www.coding-time.cn/dart/advance/Dart的Stream.html#创建-stream)创建 Stream
+## 1.创建 Stream
 
 在 Dart 中，你可以使用多种方式来创建 Stream。前面我们已经见到了 `Stream.fromIterable`，下面是一些其他的方法：
 
@@ -973,7 +902,7 @@ void main() async {
 
 在这个示例中，我们首先创建了一个 `StreamController`。然后我们使用 `sink.add` 方法添加了三个事件，使用 `sink.addError` 方法添加了一个错误。最后我们使用 `controller.close` 方法表示我们不会再添加任何事件或错误。
 
-## [#](https://www.coding-time.cn/dart/advance/Dart的Stream.html#处理-stream-事件)处理 Stream 事件
+## 2.处理 Stream 事件
 
 我们可以使用 `Stream.listen` 方法监听 Stream 的事件：
 
