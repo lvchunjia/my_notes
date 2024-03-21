@@ -926,7 +926,7 @@ void main() {
 
 在这个示例中，我们监听了 Stream 的数据事件、错误事件和完成事件。
 
-## [#](https://www.coding-time.cn/dart/advance/Dart的Stream.html#转换-stream)转换 Stream
+## 3.转换 Stream
 
 Stream API 提供了许多方法来转换 Stream。例如，你可以使用 `map` 方法来处理每个数据事件，或者使用 `where` 方法来过滤数据事件：
 
@@ -944,7 +944,7 @@ void main() async {
 
 在这个示例中，我们首先使用 `where` 方法创建了一个只包含偶数的 Stream，然后我们使用 `map` 方法将每个偶数乘以 2。
 
-## [#](https://www.coding-time.cn/dart/advance/Dart的Stream.html#组合-stream)组合 Stream
+## 4.组合 Stream
 
 你还可以使用 `StreamZip` 或 `StreamGroup` 来组合多个 Stream。例如，你可以使用 `StreamZip` 来同步处理两个 Stream 的数据事件：
 
@@ -961,11 +961,11 @@ void main() async {
 }
 ```
 
-## [#](https://www.coding-time.cn/dart/advance/Dart的Stream.html#stream的应用场景)Stream的应用场景
+## 5.Stream的应用场景
 
 好的，让我详细地解释一下上述的几个应用场景，并提供一些具体的代码示例：
 
-### [#](https://www.coding-time.cn/dart/advance/Dart的Stream.html#用户界面交互)用户界面交互
+**用户界面交互**
 
 在 Flutter 等 Dart 构建的应用程序中，Stream 可以用来监听并响应用户的交互行为。例如，你可以创建一个自定义的 `StreamController`，并使用它来监听按钮点击事件：
 
@@ -986,7 +986,7 @@ void main() {
 // 在你的 UI 中，当按钮被点击时，你可以调用 controller.sink.add 来发送一个事件。
 ```
 
-### [#](https://www.coding-time.cn/dart/advance/Dart的Stream.html#网络请求)网络请求
+**网络请求**
 
 在进行网络请求时，服务器的响应通常会分成多个数据包。你可以使用 Stream 来连续地接收和处理这些数据包，这样你就可以在不等待整个响应完成的情况下开始处理数据：
 
@@ -1009,7 +1009,7 @@ void main() async {
 }
 ```
 
-### [#](https://www.coding-time.cn/dart/advance/Dart的Stream.html#文件操作)文件操作
+**文件操作**
 
 当你需要读取一个大文件时，可以使用 Stream 来逐行处理文件内容，这样你可以在不需要将整个文件加载到内存的情况下开始处理数据：
 
@@ -1032,7 +1032,7 @@ void main() {
 }
 ```
 
-### [#](https://www.coding-time.cn/dart/advance/Dart的Stream.html#定时任务)定时任务
+**定时任务**
 
 你可以使用 Stream 创建一个定时任务，然后在每个时间间隔中执行一些操作。例如，下面的代码使用 `Stream.periodic` 创建了一个每秒执行一次的定时任务：
 
@@ -1045,16 +1045,14 @@ void main() {
 }
 ```
 
-## [#](https://www.coding-time.cn/dart/advance/Dart的Stream.html#_5-数据流处理)5. 数据流处理
+## 5. 数据流处理
 
 在处理大量数据流时，你可以使用 Stream 创建一个数据管道，并利用其提供的 `map`、`filter`、`reduce` 等操作进行数据处理。
 
 ```dart
 void main() {
   Stream.fromIterable([1, 2, 3, 4, 5])
-    .map((value)
-
- => value * 2)
+    .map((value) => value * 2)
     .listen((value) {
       print(value); // 输出 2, 4, 6, 8, 10
     });
@@ -1063,21 +1061,13 @@ void main() {
 
 这些示例展示了如何在不同的场景中使用 Stream。一旦你熟悉了 Stream 的工作方式，你会发现它是一个非常强大的工具，能够让你更方便地处理异步事件。
 
-[在 GitHub 上编辑此页](https://github.com/linwu-hi/coding-time/edit/main/docs/dart/advance/Dart的Stream.md)
 
 
-
-
-
-# Dart的Isolate
-
-[linwu](https://www.coding-time.cn/)2023年7月9日大约 4 分钟
-
-------
+# 八、Dart的Isolate
 
 Isolate 是 Dart 中进行并发编程的一种方式。由于 Dart 是单线程模型，因此在需要处理 CPU 密集型任务或需要执行长时间运行的操作时，可以使用 Isolate。
 
-## [#](https://www.coding-time.cn/dart/advance/Dart的Isolate.html#创建-isolate)创建 Isolate
+## 1.创建 Isolate
 
 在 Dart 中，所有的代码都运行在一个单线程中，这个线程被称为主 Isolate。如果你需要执行耗时的计算，你可以创建一个新的 Isolate，然后在这个新的 Isolate 中执行你的计算。
 
@@ -1101,11 +1091,11 @@ void main() async {
 
 需要注意的是，不同的 Isolate 之间不能共享内存，它们只能通过消息传递来进行通信。因此，你不能在一个 Isolate 中访问另一个 Isolate 的变量。
 
-## [#](https://www.coding-time.cn/dart/advance/Dart的Isolate.html#消息传递)消息传递
+## 2.消息传递
 
 在 Dart 中，Isolate 之间的消息传递是通过 `SendPort` 和 `ReceivePort` 来实现的。
 
-### [#](https://www.coding-time.cn/dart/advance/Dart的Isolate.html#sendport和receiveport)SendPort和ReceivePort
+**SendPort和ReceivePort**
 
 `SendPort` 和 `ReceivePort` 是 Dart 中进行进程间通信的工具。你可以将 `SendPort` 看作是一个邮箱的地址，`ReceivePort` 看作是一个邮箱。你可以通过 `SendPort` 发送消息，然后在对应的 `ReceivePort` 中接收消息。
 
@@ -1126,7 +1116,7 @@ receivePort.listen((message) {
 });
 ```
 
-## [#](https://www.coding-time.cn/dart/advance/Dart的Isolate.html#在isolate-之间传递消息)在Isolate 之间传递消息
+**在Isolate 之间传递消息**
 
 当你创建一个新的 Isolate 时，你可以将一个 `SendPort` 传递给这个新的 Isolate。然后你就可以通过这个 `SendPort` 向新的 Isolate 发送消息，或者从新的 Isolate 接收消息。
 
@@ -1154,11 +1144,11 @@ void main() async {
 
 需要注意的是，你只能通过 `SendPort` 发送一些简单的数据，例如数字、字符串、列表、映射等。你不能发送一个函数或者一个对象的实例。
 
-## [#](https://www.coding-time.cn/dart/advance/Dart的Isolate.html#应用场景)应用场景
+## 3.应用场景
 
 Isolate 是 Dart 中进行并发编程的一种方式。由于 Dart 是单线程模型，因此在需要处理 CPU 密集型任务或需要执行长时间运行的操作时，可以使用 Isolate。
 
-### [#](https://www.coding-time.cn/dart/advance/Dart的Isolate.html#数据处理)数据处理
+**数据处理**
 
 对于大量的数据处理或复杂的计算任务，例如图像处理、大文件的读写、大数据集合的排序和筛选等，你可以使用 Isolate 进行处理，防止这些操作阻塞 UI 线程，造成应用程序的卡顿或无响应。
 
@@ -1180,7 +1170,7 @@ void main() {
 }
 ```
 
-### [#](https://www.coding-time.cn/dart/advance/Dart的Isolate.html#网络请求)网络请求
+**网络请求**
 
 尽管 Dart 的 I/O 操作是非阻塞的，但是在进行网络请求并接收数据时，如果数据量较大或需要复杂的处理（如 JSON 或 XML 的解析），这可能会消耗大量的 CPU 时间，从而阻塞 UI 线程。在这种情况下，你可以使用 Isolate。
 
@@ -1201,21 +1191,13 @@ void main() async {
 }
 ```
 
-### [#](https://www.coding-time.cn/dart/advance/Dart的Isolate.html#web-服务器)Web 服务器
+**Web 服务器**
 
 在编写 Web 服务器时，你可以使用 Isolate 来处理并发的请求。每当收到新的请求时，你可以创建一个新的 Isolate 来处理请求，这样可以避免阻塞服务器的主线程。
 
-[在 GitHub 上编辑此页](https://github.com/linwu-hi/coding-time/edit/main/docs/dart/advance/Dart的Isolate.md)
 
 
-
-
-
-# Dart中泛型
-
-[linwu](https://www.coding-time.cn/)2023年7月9日大约 3 分钟
-
-------
+# 九、Dart中泛型
 
 泛型，一种强大而灵活的编程工具，可以让开发者创建可以适应任何类型的代码，同时又保持类型安全。这是在许多编程语言中都存在的一种重要的特性，Dart也不例外。在这篇文章中，我们将深入探讨Dart中的泛型。
 
@@ -1304,31 +1286,25 @@ var nameToAge = {'Alice': 25, 'Bob': 27};  // Map<String, int>
 
 
 
-# 空安全
-
-[linwu](https://www.coding-time.cn/)2023年7月9日大约 3 分钟
-
-------
+# 十、空安全
 
 > 更强的类型系统，更少的错误
 
 近些年来，编程语言的类型安全性已经成为软件开发社区的一个主要焦点。通过利用类型安全，开发人员可以更好地预防错误，简化代码，并提高程序的整体性能和可靠性。Dart是一个被设计为安全、可扩展和高效的现代化编程语言，近期其发布了一项重要的更新：空安全。
 
-## [#](https://www.coding-time.cn/dart/advance/空安全.html#空安全是什么)空安全是什么？
+## 1.空安全是什么？
 
 空安全是指编程语言的类型系统能够区分可为空的类型和不能为空的类型。这种区别可以防止空引用错误（Null Reference Errors），也称为 "null pointer exceptions" 或 "the billion-dollar mistake"。空引全错误是软件开发中最常见的错误之一，它们在运行时发生，常常会导致程序的崩溃或其他严重的问题。
 
-## [#](https://www.coding-time.cn/dart/advance/空安全.html#dart-的空安全)Dart 的空安全
+## 2.Dart 的空安全
 
 Dart 2.12 版本引入了空安全。在引入空安全之前，Dart 任何对象都可以为空。然而，这种设计虽然看起来灵活，但实际上会引起很多问题，尤其是当开发者假设某个值不会为空，但实际上它为空时。由于这样的错误通常在运行时才会被检测到，所以它们通常很难发现和修复。
 
-空安全通过在类型系统级别防止这种错误的发生。Dart 的空安全类型系统区分了可空类型和非空类型。例如，`String` 类型的对象不能为 `null`，而 `String?` 类型的对象可以为 `null`。Dart 会在编译时检查代码，确保所有的非空类型的变量在使用之前都已经被初始化，并且不会被赋值为 `null`。
+空安全通过在类型系统级别防止这种错误的发生。**Dart 是一个空安全的语言，也就是说，你无法将一个非空类型对象值设为 null 。**Dart 的空安全类型系统区分了可空类型和非空类型。**如果希望对象可以赋值为 null ，需要在类型后加上 `?` 表示可空。**
 
-## [#](https://www.coding-time.cn/dart/advance/空安全.html#如何在dart中使用空安全)如何在Dart中使用空安全？
+例如，`String` 类型的对象不能为 `null`，而 `String?` 类型的对象可以为 `null`。Dart 会在编译时检查代码，确保所有的非空类型的变量在使用之前都已经被初始化，并且不会被赋值为 `null`。
 
-使用Dart空安全主要涉及到两个方面：理解可空和非空类型，以及如何处理可能为空的值。
-
-### [#](https://www.coding-time.cn/dart/advance/空安全.html#可空和非空类型)可空和非空类型
+## 3.可空和非空类型
 
 在空安全中，所有类型默认都是非空的。例如，如果你声明一个 `String` 类型的变量，Dart会假设它永远不会为空。如果你想声明一个可以为空的 `String`，你需要在类型后面加上 `?`，如 `String?`。
 
@@ -1337,15 +1313,13 @@ String nonNullableString = 'Hello, Dart!'; // 非空类型
 String? nullableString = null; // 可空类型
 ```
 
-### [#](https://www.coding-time.cn/dart/advance/空安全.html#处理可空值)处理可空值
+## 4.处理可空值
 
 当你处理一个可能为空的值时，Dart 提供了几种方式来帮助你。例如，你可以使用 `??` 操作符来提供一个默认值，当变量为空时，将会使用这个默认值。
 
 ```dart
 String? nullableString = null;
-String nonNullableString = nullableString ?? 'Default String'; // 如果
-
-nullableString为null，那么将使用'Default String'
+String nonNullableString = nullableString ?? 'Default String'; // 如果nullableString为null，那么将使用'Default String'
 ```
 
 另外，Dart 也提供了 `?.` 操作符，允许你在对象为空时跳过方法调用或属性访问，避免抛出空引用错误。
@@ -1355,17 +1329,9 @@ String? nullableString = null;
 int? length = nullableString?.length; // 如果nullableString为null，那么length也将为null
 ```
 
-## [#](https://www.coding-time.cn/dart/advance/空安全.html#结论)结论
-
-Dart 的空安全特性为开发者提供了一个强大的工具，可以在编译时就捕获和修复可能的空引用错误。
-
-[在 GitHub 上编辑此页](https://github.com/linwu-hi/coding-time/edit/main/docs/dart/advance/空安全.md)
 
 
-
-
-
-# 单元测试和集成测试
+# 十一、单元测试和集成测试
 
 [linwu](https://www.coding-time.cn/)2023年7月9日大约 2 分钟
 

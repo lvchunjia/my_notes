@@ -47,7 +47,7 @@ person.sayHello();  // 输出 Hello, my name is Alice, I am 20 years old.
 
 ## 4.构造函数
 
-在 Dart 中，构造函数的名称与类的名称相同，我们可以在构造函数中初始化对象的属性：
+在 Dart 中，构造函数的名称与类的名称相同，我们可以在构造函数中初始化对象的属性，在实例化对象时，会触发函数体的逻辑，对属性进行赋值，这就是**通过构造函数初始化成员属性**。
 
 ```dart
 class Person {
@@ -72,6 +72,17 @@ person.sayHello();
 ## 5.this关键字的使用
 
 在 Dart 中，`this` 关键字引用的是当前实例。我们可以在构造函数或其他方法中使用 `this` 关键字来访问当前对象的属性或方法。
+
+另外，构造函数中，通过 `this` 对象进行赋值的操作，可以进行简化书写，如下所示：
+
+```dart
+class Person {
+  String name;
+  int age;
+
+  Person(this.name, this.age);
+}
+```
 
 ## 6.getter和setter方法
 
@@ -122,12 +133,20 @@ class Person {
 
 ```dart
 class Animal {
+  String name = '';
+  
+  Animal(this.name);
+    
   void eat() {
     print('Eating...');
   }
 }
 
 class Cat extends Animal {
+  final String type;
+  
+  Cat(super.name, {required this.type});
+  
   void meow() {
     print('Meow...');
   }
@@ -138,7 +157,7 @@ cat.eat();  // 输出 Eating...
 cat.meow();  // 输出 Meow...
 ```
 
-在这个例子中，`Cat` 类是 `Animal` 类的子类，因此 `Cat` 类的对象可以访问 `Animal` 类的所有公有方法。
+在这个例子中，`Cat` 类是 `Animal` 类的子类，因此 `Cat` 类的对象可以访问 `Animal` 类的所有公有方法。在 `Cat` 类中可以定义额外的成员属性`type`， 另外 `super.name` 语法是：在入参中为父类中的成员赋值。
 
 ## 3.使用super关键字访问父类
 

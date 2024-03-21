@@ -364,7 +364,41 @@ void printHello(String name) {
 printHello('Dart');
 ```
 
-### 2. 箭头语法
+### 2.参数
+
+**命名参数**
+
+有些时候，函数的参数过多，在调用时需要记清顺序，是比较麻烦的。Dart 中支持命名参数，可以通过参数的名称来传参，不需要在意入参的顺序。通过 `{}` 包裹命名的参数，其中 required 关键字表示该入参必须传入; 另外，可以用 `=` 提供参数的默认值，使用者在调用时可以选填：
+
+```dart
+double toly = bmi(weight: 70, height: 1.8);
+double ls = bmi(height: 1.79);
+
+double bmi({
+  required double height,
+  double weight = 65,
+}) {
+  double result = weight / (height * height);
+  return result;
+}
+```
+
+**位置参数**
+
+方括号 `[]` 包围参数列表，位置参数可以给默认值，在使用时必须要按照参数顺序传入，它和普通参数列表的区别在于：在调用时，可以省略若干个参数，省略的参数使用默认值：
+
+```dart
+double toly = bmi(70, 1.8);
+double ls = bmi();
+double wy = bmi(1.69);
+
+double bmi([double height = 1.79, double weight = 65]) {
+  double result = weight / (height * height);
+  return result;
+}
+```
+
+### 3. 箭头语法
 
 当函数体只有一句话的时候，我们可以使用箭头语法来简化函数的定义。
 
@@ -374,7 +408,7 @@ void printHello(String name) => print('Hello, $name');
 printHello('Dart');
 ```
 
-### 3. 高阶函数
+### 4. 高阶函数
 
 高阶函数是指可以接收函数作为参数，或者返回函数的函数。Dart语言支持高阶函数。
 
@@ -388,7 +422,7 @@ void calculate(int a, int b, Function operation) {
 calculate(2, 3, (a, b) => a * b);
 ```
 
-### 4. 闭包
+### 5. 闭包
 
 在Dart中，闭包可以定义为一个函数对象，即使其函数对象的调用在它原始范围之外，也能够访问在它词法范围内的变量。换句话说，闭包是一个能够读取其他函数内部变量的函数。
 
@@ -407,11 +441,13 @@ void main() {
 
 ## 六、Dart中的集合类型
 
-*Dart 提供了一系列的集合类型，其中包括 Map 和 Set。本文将简要介绍 Dart 中的 Map 和 Set，以及如何在 Dart 中使用这两种数据结构。*
+*Dart 提供了一系列的集合类型，其中包括 Map 和 Set。*
 
 ### 1.Dart中的List
 
-Dart中的List是一种重要的数据类型，可以存储一系列有序的元素，元素的类型可以是任意类型，包括数字，字符串，布尔值，对象，甚至是其他List。它类似于其他编程语言中的数组，但具有更多的内置方法和功能。
+Dart中的List是一种重要的数据类型，可以存储一系列有序的元素，元素的类型可以是任意类型，包括数字，字符串，布尔值，对象，甚至是其他List，并且允许重复。
+
+它类似于其他编程语言中的数组，但具有更多的内置方法和功能。
 
 #### 创建和初始化List
 
@@ -445,6 +481,7 @@ List类提供了一些方法来处理和操作列表。
 - `insert(index, element)`: 在指定索引处插入一个元素
 - `remove(element)`: 删除列表中首个匹配的元素
 - `removeAt(index)`: 删除指定索引处的元素
+- `removeLast`: 移除最后元素：
 - `indexOf(element)`: 查找指定元素的索引，如果元素不存在，则返回-1
 - `contains(element)`: 检查列表是否包含指定元素，如果包含则返回true，否则返回false
 - `sort([compareFunction])`: 对List的元素进行排序，可以提供一个可选的比较函数
@@ -471,6 +508,28 @@ print(myList.contains(2));  // 输出 false
 myList.sort();
 print(myList);  // 输出 [1, 3, 4]
 ```
+
+**遍历LIst**
+
+通过 `.length` 可以得到列表的长度，使用 `for` 循环，让索引自加，就能依次输出对应索引的值：
+
+```dart
+List<int> numList = [1, 9, 9, 4];
+for (int i = 0; i < numList.length; i++) {
+  int value = numList[i];
+  print("索引:$i, 元素值:$value");
+}
+```
+
+如果遍历过程中，不需要索引信息，也可以通过 `for-in` 循环的语法，方便地遍历列表中的值：
+
+```dart
+for(int value in numList){
+  print("元素值:$value");
+}
+```
+
+
 
 ### 2.Dart中的Map
 
@@ -540,6 +599,23 @@ myMap.clear();
 print(myMap);  // 输出 {}
 ```
 
+**遍历Map**
+
+通过 `forEach` 方法来遍历元素值：
+
+```dart
+Map<int, String> numMap = {
+  0: 'zero',
+  1: 'one',
+  2: 'two',
+};
+numMap.forEach((key, value) {
+  print("${key} = $value");
+});
+```
+
+
+
 ### 3.Dart中的Set
 
 Dart中的Set是一种无序的、包含唯一项的集合，所有的元素都是唯一的，没有重复项。这意味着无论你尝试将同样的项目添加到Set中多少次，它都只会出现一次。
@@ -579,9 +655,9 @@ print(mySet);  // 输出 {item2, item3, item4}
 Set类提供了一些方法来处理和操作集合。
 
 - `contains(element)`: 检查Set是否包含指定的元素
-- `union(other)`: 返回一个新的Set，包含当前Set和另一个Set中所有的元素
-- `intersection(other)`: 返回一个新的Set，包含当前Set和另一个Set中共有的元素
-- `difference(other)`: 返回一个新的Set，包含当前Set中的元素，但不包含另一个Set中的元素
+- `union(other)`: **并集**。返回一个新的Set，包含当前Set和另一个Set中所有的元素
+- `intersection(other)`: **交集**。返回一个新的Set，包含当前Set和另一个Set中共有的元素
+- `difference(other)`: **差集**。返回一个新的Set，包含当前Set中的元素，但不包含另一个Set中的元素
 
 ```dart
 var mySet1 = {'item1', 'item2', 'item3'};
@@ -599,7 +675,16 @@ var differenceSet = mySet1.difference(mySet2);
 print(differenceSet);  // 输出 {item1}
 ```
 
+**遍历Set**
 
+由于集合没有索引概念，使用无法像 List 那样通过 for 循环增加索引来访问元素；但可以通过 `for-in` 循环来遍历元素值：
+
+```dart
+Set<int> numSet = {1, 9, 4};
+for(int value in numSet){
+  print("元素值:$value");
+}
+```
 
 
 
