@@ -31,39 +31,118 @@ final pi = 3.14159;
 const gravity = 9.8; 
 ```
 
-注意，`final` 和 `const` 的区别在于，`final` 的值只能被设定一次，而 `const` 则是一个编译时常量。
+注意，`final` 和 `const` 的区别在于，`final` 的值只能被设定一次，是运行期不可变量，而 `const` 则是一个编译时常量。
+
+
 
 ## 二、数据类型
 
-*Dart是一个强类型语言，包含了许多常见的数据类型：*
+*Dart是一个强类型语言，包含了许多常见的数据类型。*
 
-**Numbers**：包括 `int` 和 `double` 两种类型。
+- **Numbers**：包括 `int` 和 `double` 两种类型。注意一点， `num` 既可以表示整数，也可以表示小数。
 
 ```dart
 int age = 18;
 double score = 93.5;
+
+num a = 57; // 整型
+num b = 3.28; // 浮点型
+print("a:${a.runtimeType}===b:${b.runtimeType}"); // a:int===b:double
 ```
 
-**Strings**：表示文本的数据类型。可以通过单引号或者双引号来创建字符串。
+ `num` 常用的方法：
+
+```dart
+num b = 3.28;
+b.abs(); 		// 绝对值 : 3.28
+b.ceil(); 		// 向上取整: 4
+b.floor(); 		// 向下取整: 3
+b.round(); 		// 四舍五入取整: 3
+b.truncate();		// 去除小数部位取整: 3
+String v = b.toStringAsFixed(1)); //四舍五入，保留几位小数，返回字符串: 3.3
+```
+
+```dart
+// `parse` 方法用于通过解析数据获得数字
+double result1 = double.parse("3.3");
+int result2 = int.parse("10");
+
+// int 类型，通过 toRadixString 可以把整型转化为其他进制，以字符串形式输出。
+int a = 2022;
+print(a.toRadixString(2));//11111100110
+print(a.toRadixString(16));//7e6
+
+// int 解析字符串时，也可以指定字符串的进制。
+int value = int.parse('7e6',radix: 16);
+print(value); // 2022
+int value1 = int.parse('toly',radix: 36);
+print(value1); // 1384918
+```
+
+
+
+- **Strings**：表示文本的数据类型。可以通过单引号或者双引号来创建字符串。
 
 ```dart
 String hello = 'Hello';
+String b = "hello, toly";
+String c = '''hello, toly''';
+String d = """hello, toly""";
+
+// 字符串模板
+String result = '今天我和${name}一起去$addr玩，很开心！';
 ```
 
-**Booleans**：包括 `true` 和 `false` 两种布尔值。
+字符串方法
+
+```dart
+// 字符串本身相当于若干字符组成的聚合对象，可以通过 [] 索引来访问字符
+String name = 'toly1994';
+print(name[4]); // 1
+print(name[name.length - 1]); // 4
+
+//substring ，用于截取字符串。参数 起始索引 和 结束索引。注意，包含起始字符，不包含结束字符。
+print(name.substring(4,name.length - 1 )); //199
+
+// trim 方法用于去除首尾 空格符 ，另外 trimLeft 只去除开头的空格； trimRight 只去除末尾的空格：
+String name = '  toly 1994 ';
+name.trim();//toly空1994
+name.trimLeft(); //toly空1994空 
+name.trimRight();//空空toly空1994
+
+// toUpperCase 方法用于把所有字母变成大写字母；toLowerCase 方法把所有字母变成小写字母。
+String name = 'tolY1994 ';
+name.toUpperCase();//TOLY1994
+name.toLowerCase(); //toly1994 
+
+// 字符串有三个返回 bool 类型的方法，如下分别校验 是否以XXX开头 、是否以XXX结尾、 是否包含 XXX：
+String name = 'toly1994';
+name.startsWith('T'); // 以XXX开始
+name.endsWith('4');  // 以XXX结尾
+name.contains('99'); // 包含XXX
+
+// 通过 replaceAll 和 split 方法可以对字符串进行替换和分割操作
+String name = 'toly 1994';
+name.replaceAll(' ','_'); //toly_1994
+name.split(' '); //[toly, 1994]
+```
+
+
+
+- **Booleans**：包括 `true` 和 `false` 两种布尔值。
 
 ```dart
 bool isTrue = true;
 bool isFalse = false;
 ```
 
-**Lists**：一个有序的项目集合，也被称为数组。
+- **Lists**：一个有序的项目集合，也被称为数组。
 
 ```dart
 List<int> numbers = [1, 2, 3];
 ```
 
-**Maps**：无序的键值对集合。
+- **Maps**：无序的键值对集合。
 
 ```dart
 Map<String, String> countries = {
@@ -350,7 +429,7 @@ switch (grade) {
 
 在Dart中，函数可以定义为一段实现特定功能的代码块，可以带有参数和返回值。
 
-定义函数：
+定义函数：在 `dart` 中，定义函数并不需要关键字， `返回值类型` 和 `参数类型` 是可以省略的
 
 ```dart
 void printHello(String name) {
@@ -364,7 +443,7 @@ void printHello(String name) {
 printHello('Dart');
 ```
 
-### 2.参数
+### 2. 参数
 
 **命名参数**
 
@@ -398,7 +477,28 @@ double bmi([double height = 1.79, double weight = 65]) {
 }
 ```
 
-### 3. 箭头语法
+### 3. 函数类型
+
+函数可以通过 `typedef` 定义类型，如下定义了一个 `Operation` 类型，表示一种入参是 `double` ，返回值是 `double` 的函数。
+
+```dart
+typedef Operation = double Function(double);
+
+main(){
+   // 声明一个 Operation 类型的 op 变量来指代 square 函数
+   Operation op = square;
+  
+   // 通过 op 变量触发该函数
+   op(10);
+   op.call(10);
+}
+
+double square(double a) {
+  return a * a;
+}
+```
+
+### 4. 箭头语法
 
 当函数体只有一句话的时候，我们可以使用箭头语法来简化函数的定义。
 
@@ -408,7 +508,7 @@ void printHello(String name) => print('Hello, $name');
 printHello('Dart');
 ```
 
-### 4. 高阶函数
+### 5. 高阶函数
 
 高阶函数是指可以接收函数作为参数，或者返回函数的函数。Dart语言支持高阶函数。
 
@@ -422,7 +522,7 @@ void calculate(int a, int b, Function operation) {
 calculate(2, 3, (a, b) => a * b);
 ```
 
-### 5. 闭包
+### 6. 闭包
 
 在Dart中，闭包可以定义为一个函数对象，即使其函数对象的调用在它原始范围之外，也能够访问在它词法范围内的变量。换句话说，闭包是一个能够读取其他函数内部变量的函数。
 
@@ -443,7 +543,7 @@ void main() {
 
 *Dart 提供了一系列的集合类型，其中包括 Map 和 Set。*
 
-### 1.Dart中的List
+### 1. Dart中的List
 
 Dart中的List是一种重要的数据类型，可以存储一系列有序的元素，元素的类型可以是任意类型，包括数字，字符串，布尔值，对象，甚至是其他List，并且允许重复。
 
@@ -477,7 +577,7 @@ print(myList[0]);  // 输出10
 
 List类提供了一些方法来处理和操作列表。
 
-- `add(element)`: 在List的末尾添加一个元素
+- `add(element)`: 在List的末尾添加一个元素；`addAll` 方法用于添加多个元素
 - `insert(index, element)`: 在指定索引处插入一个元素
 - `remove(element)`: 删除列表中首个匹配的元素
 - `removeAt(index)`: 删除指定索引处的元素
@@ -491,6 +591,7 @@ var myList = [1, 2, 3];
 
 myList.add(4);
 print(myList);  // 输出 [1, 2, 3, 4]
+// myList.addAll([4, 5, 6]);
 
 myList.insert(0, 0);
 print(myList);  // 输出 [0, 1, 2, 3, 4]
@@ -531,7 +632,7 @@ for(int value in numList){
 
 
 
-### 2.Dart中的Map
+### 2. Dart中的Map
 
 Dart中的Map是一种无序的键值对集合，其中的键和值都可以是任何类型。它是一个动态集合，这意味着你可以在运行时向其中添加或删除键值对。Map在很多场景下都很有用，例如，当你需要通过一种方式（键）来查找或访问数据（值）时。
 
@@ -616,7 +717,7 @@ numMap.forEach((key, value) {
 
 
 
-### 3.Dart中的Set
+### 3. Dart中的Set
 
 Dart中的Set是一种无序的、包含唯一项的集合，所有的元素都是唯一的，没有重复项。这意味着无论你尝试将同样的项目添加到Set中多少次，它都只会出现一次。
 
@@ -638,7 +739,7 @@ var setWithConstructor = Set<String>();
 
 #### 添加和删除Set元素
 
-你可以使用`add`和`remove`方法向Set中添加或删除元素：
+使用`add`和`remove`方法向Set中添加或删除元素：
 
 ```dart
 var mySet = {'item1', 'item2', 'item3'};
@@ -648,6 +749,15 @@ print(mySet);  // 输出 {item1, item2, item3, item4}
 
 mySet.remove('item1');
 print(mySet);  // 输出 {item2, item3, item4}
+```
+
+通过 `addAll` 和 `removeAll` 可以同时添加和移除多个元素。其中入参是可迭代对象，`List` 和 `Set` 都是可迭代对象。
+
+```dart
+Set<String> cnNumUnits = {'零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖'};
+cnNumUnits.addAll({'零', '元','角','分'});
+cnNumUnits.addAll(['拾', '佰', '仟', '萬', '亿']);
+cnNumUnits.removeAll({'元','角','分'});
 ```
 
 #### Set的主要方法

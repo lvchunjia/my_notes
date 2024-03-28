@@ -36,7 +36,7 @@ FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
 
 
 
-## 二、Flutter工具之多版本管理： fvm
+## 二、多版本管理： fvm
 
 > 参考：[ flutter版本管理工具-CSDN博客](https://blog.csdn.net/qq_28550263/article/details/136300307)、[flutter 多版本管理 fvm-稀土掘金](https://juejin.cn/post/7219130999685611580)
 
@@ -50,23 +50,19 @@ fvm 可以两种模式使用 全局/虚拟环境
 
 - 版本隔离
   它允许为每个项目维护独立的 Flutter 版本，从而避免了不同项目之间可能出现的版本冲突问题。由于不同的项目可能依赖于不同的 Flutter 版本，版本隔离确保了项目之间的独立性，使得开发者可以根据项目的需要选择合适的 Flutter 版本进行开发和测试，而无需担心可能会因为版本不匹配而导致的问题。
-
 - 快速切换
   通过简单的命令，开发者可以在不同的项目之间快速切换 Flutter 版本，而无需手动管理不同版本的 Flutter SDK，大大提高了开发效率和便捷性。
-
 - 节省空间
   由于 FVM 允许共享相同版本的 Flutter SDK，并且只需下载一次即可在多个项目中使用，因此可以避免重复下载相同版本的 Flutter SDK，从而节省了存储空间。
+
+
 
 ### 安装 fvm
 
 - [从 GitHub 存储库下载](https://link.juejin.cn/?target=https%3A%2F%2Fgithub.com%2Fleoafarias%2Ffvm%2Freleases)
 - 通过 pub 安装：`dart pub global activate fvm`
-- Windows下通过Chocolatey包管理器安装
 
-```shell
-# 安装
-choco install fvm
-```
+#### Mac安装 fvm
 
 - Mac OS X/Linux下通过Homebrew包管理器安装
 
@@ -79,9 +75,9 @@ brew uninstall fvm
 brew untap leoafarias/fvm
 ```
 
-安装完成后执行 `fvm--version` 检查是否成功，若
+安装完成后执行 `fvm--version` 检查是否成功
 
-### fvm环境变量配置
+**fvm环境变量配置**
 
 安装fvm后，设置环境变量
 
@@ -91,12 +87,27 @@ brew untap leoafarias/fvm
 export FVM_CACHE_PATH="$HOME/.fvm"
 # 全局flutter 配置（default为切换后的flutter版本软链接） 若以上未修改，则为将.fvm换为fvm
 export PATH=$HOME/.fvm/default/bin:$PATH
-# 可选：flutter 配置国内镜像（flutter中文开源社区镜像，也可选其它）
-export PUB_HOSTED_URL=https://pub.flutter-io.cn
-export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
 ```
 
-配置完环境变量后安装flutter并设为默认
+#### Win安装fvm
+
+- windows 下安装Chocolatey（强大的软件包管理工具）
+
+```shell
+Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+```
+
+- 使用choco安装fvm
+
+```shell
+choco install fvm
+```
+
+
+
+### 使用前设置
+
+- 配置完环境变量后安装flutter并设为默认
 
 ```shell
 # 安装最新版稳定flutter版本
@@ -104,6 +115,15 @@ fvm install stable
 # 设置为全局
 fvm global stable
 ```
+
+- 可选：flutter 国内镜像（flutter中文开源社区镜像，也可选其它）
+
+```shell
+export PUB_HOSTED_URL=https://pub.flutter-io.cn
+export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
+```
+
+
 
 ### 常用命令
 
