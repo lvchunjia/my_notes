@@ -152,6 +152,12 @@ Map<String, String> countries = {
 };
 ```
 
+- **Set**：无序的、包含唯一项的集合
+
+```dart
+Set<String> cnNumUnits = {'零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖'};
+```
+
 
 
 ## 三、运算符
@@ -549,7 +555,7 @@ Dart中的List是一种重要的数据类型，可以存储一系列有序的元
 
 它类似于其他编程语言中的数组，但具有更多的内置方法和功能。
 
-#### 创建和初始化List
+#### 1.1. 创建和初始化List
 
 在Dart中，你可以通过几种不同的方式创建和初始化List：
 
@@ -562,7 +568,7 @@ var initializedList = [1, 2, 3, 4, 5];
 var listWithConstructor = List<int>.filled(5, 0); // 创建一个包含5个0的列表
 ```
 
-#### 访问和修改List元素
+#### 1.2. 访问和修改List元素
 
 你可以使用索引（从0开始）来访问和修改List中的元素：
 
@@ -573,7 +579,7 @@ myList[0] = 10;
 print(myList[0]);  // 输出10
 ```
 
-#### List的主要方法
+#### 1.3. List的主要方法
 
 List类提供了一些方法来处理和操作列表。
 
@@ -636,7 +642,7 @@ for(int value in numList){
 
 Dart中的Map是一种无序的键值对集合，其中的键和值都可以是任何类型。它是一个动态集合，这意味着你可以在运行时向其中添加或删除键值对。Map在很多场景下都很有用，例如，当你需要通过一种方式（键）来查找或访问数据（值）时。
 
-#### 创建和初始化Map
+#### 2.1. 创建和初始化Map
 
 在Dart中，你可以通过以下几种方式创建和初始化Map：
 
@@ -655,7 +661,7 @@ var initializedMap = {
 var mapWithConstructor = Map();
 ```
 
-#### 访问和修改Map元素
+#### 2.2. 访问和修改Map元素
 
 你可以通过键来访问和修改Map中的值：
 
@@ -671,7 +677,7 @@ myMap['key1'] = 'new value1';
 print(myMap['key1']);  // 输出 'new value1'
 ```
 
-#### Map的主要方法
+#### 2.3. Map的主要方法
 
 Map类提供了一些方法来处理和操作键值对。
 
@@ -721,7 +727,7 @@ numMap.forEach((key, value) {
 
 Dart中的Set是一种无序的、包含唯一项的集合，所有的元素都是唯一的，没有重复项。这意味着无论你尝试将同样的项目添加到Set中多少次，它都只会出现一次。
 
-#### 创建和初始化Set
+#### 3.1. 创建和初始化Set
 
 在Dart中，你可以通过以下几种方式创建和初始化Set：
 
@@ -737,7 +743,7 @@ var setWithConstructor = Set<String>();
 
 注意：如果你尝试创建一个空的Set但未指定类型，Dart会创建一个动态类型的Map。因此，为了创建一个空的Set，你需要在创建Set时提供一个类型参数。
 
-#### 添加和删除Set元素
+#### 3.2. 添加和删除Set元素
 
 使用`add`和`remove`方法向Set中添加或删除元素：
 
@@ -760,7 +766,7 @@ cnNumUnits.addAll(['拾', '佰', '仟', '萬', '亿']);
 cnNumUnits.removeAll({'元','角','分'});
 ```
 
-#### Set的主要方法
+#### 3.3. Set的主要方法
 
 Set类提供了一些方法来处理和操作集合。
 
@@ -797,6 +803,48 @@ for(int value in numSet){
 ```
 
 
+
+### 4. 三种聚合类型的关系
+
+首先 `List` 和 `Set` 之间可以相互转化。`Set` 中的元素是不重复的，如果 `List` 中有重复的元素，通过 `toSet` 方法转化为 `Set` 之后，可以去除重复元素，再把 `Set` 通过 `toList` 转化为 `List` ，就可以达到 `去重` 的需求。
+
+```dart
+List<String> cnNumUnits = ['零', '壹', '贰', '叁','贰', '贰'];
+Set<String> cnNumSet = cnNumUnits.toSet();
+print(cnNumSet); // {零, 壹, 贰, 叁}
+List<String> cnNumUnique  = cnNumSet.toList();
+print(cnNumUnique); // [零, 壹, 贰, 叁]
+```
+
+`List` 通过 `asMap` 方法可以返回一个 `Map` 对象。其中键是索引，值是元素值
+
+```dart
+List<String> cnNumUnits = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖'];
+Map<int,String> cnNumMap = cnNumUnits.asMap();
+print(cnNumMap);
+// {0: 零, 1: 壹, 2: 贰, 3: 叁, 4: 肆, 5: 伍, 6: 陆, 7: 柒, 8: 捌, 9: 玖}
+```
+
+通过 `Map.fromIterables` 方法，可以根据两个可迭代对象创建映射对象，前者是 `key` ，后者是 `value` 。其中 `List` 和 `Set` 都是可迭代对象，可以作为入参。
+
+```dart
+List<String> cnNumUnits = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖','拾','佰','仟','萬'];
+Set<int> numUnitsSet = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9,10,100,1000,10000};
+Map<int,String> map = Map.fromIterables(numUnitsSet,cnNumUnits);
+print(map);
+// {0: 零, 1: 壹, 2: 贰, 3: 叁, 4: 肆, 5: 伍, 6: 陆, 7: 柒, 8: 捌, 9: 玖, 10: 拾, 100: 佰, 1000: 仟, 10000: 萬}
+```
+
+`Map` 对象可以通过 `keys` 和 `values` 获取可迭代对象，再通过 `toList` 和 `toSet` 就可以获得 `List` 和 `Set` 对象。
+
+```dart
+Map<String,String> dict = {'about': '关于', 'boot': '启动', 'card': '卡片'};
+dict.keys.toList();
+dict.values.toList();
+
+dict.keys.toSet();
+dict.values.toSet();
+```
 
 
 
