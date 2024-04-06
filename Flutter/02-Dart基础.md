@@ -152,6 +152,12 @@ Map<String, String> countries = {
 };
 ```
 
+- **Set**：无序的、包含唯一项的集合
+
+```dart
+Set<String> cnNumUnits = {'零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖'};
+```
+
 
 
 ## 三、运算符
@@ -271,6 +277,22 @@ print(a >> b); // 输出：2
 print(a << b); // 输出：40
 ```
 
+`&` 左右连接值，是个二元运算符。其运算特点是：将左右值的位依次运算，只有对应位上下的数字都为 `1 `时，运算结果为 `1` ，其他情况为 `0` 。
+
+`|` 左右连接值，也是个二元运算符。其运算特点是：将左右值的位依次运算，只要对应位上下的数字有一个是 `1 `，运算结果为 `1` ，其他情况为 `0` 。
+
+`~` 右侧连接一个值，是个 `一元` 运算符。其运算特点是：将每位数字取反，也就是遇 `0` 写 `1` ，遇 `1` 写 `0` 。
+
+`^` 左右连接值，是个二元运算符。其运算特点是：将左右值的位依次运算，只有对应位上下的数字不同时，运算结果为 `1` ，其他情况为 `0` 。
+
+`<<` 和 `>>` 是位移运算符，左侧是 `值` ，右侧是 `位移的数量` ，也是个二元运算符。 如下对 `65` 左移两位，就是把二进制数字向左移动两位，高位移出的舍弃，低位不够的补 `0` 。
+
+```dart
+int c = ~b;
+  0000 0000 0000 0000 0000 0000 0000 1011  b = 11
+~ 1111 1111 1111 1111 1111 1111 1111 0100  c = -12
+```
+
 ### 速查表
 
 以下列出了 Dart 的运算符，从高到低按照优先级排列：
@@ -350,6 +372,17 @@ for (var i = 0; i < 5; i++) {
 }
 ```
 
+- `for...in` 循环
+
+`for...in` 只是对列表遍历的一个语法糖，它可以屏蔽循环三大件，直接遍历访问元素。好处是使用方便，坏处是无法直接感知遍历到的索引位置。
+
+```dart
+List<String> cnNumUnits = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖'];
+for (String element in cnNumUnits) {
+  print(element);
+}
+```
+
 - `while`循环
 
 `while`循环会在条件满足时持续循环。
@@ -374,9 +407,11 @@ do {
 } while (num > 0);
 ```
 
-### 3. `break`和`continue`
+### 3. `break`、`continue`、`return`
 
 在循环中，`break`语句可以用来立即终止循环，而`continue`语句可以用来跳过当前循环中剩余的代码，直接开始下一次循环。
+
+`return` 关键字并非用于循环的流程控制，而是表示当前方法已经结束。由于方法结束，其中的循环自然也就不会再进行了。
 
 ```dart
 for (var i = 0; i < 10; i++) {
@@ -392,6 +427,16 @@ for (var i = 0; i < 10; i++) {
   }
   print('Hello Dart $i');
 }
+
+int sum = 0;
+for (int i = 0; i < 10; i++) {
+  if(i.isEven){// 如果是偶数
+    return; //tag1
+  }
+  sum += i; //tag2
+  print("第 $i 次循环，计入 sum");
+}
+print("sum: $sum"); // tag3
 ```
 
 ### 4. `switch`和`case`
@@ -549,7 +594,7 @@ Dart中的List是一种重要的数据类型，可以存储一系列有序的元
 
 它类似于其他编程语言中的数组，但具有更多的内置方法和功能。
 
-#### 创建和初始化List
+#### 1.1. 创建和初始化List
 
 在Dart中，你可以通过几种不同的方式创建和初始化List：
 
@@ -562,7 +607,7 @@ var initializedList = [1, 2, 3, 4, 5];
 var listWithConstructor = List<int>.filled(5, 0); // 创建一个包含5个0的列表
 ```
 
-#### 访问和修改List元素
+#### 1.2. 访问和修改List元素
 
 你可以使用索引（从0开始）来访问和修改List中的元素：
 
@@ -573,7 +618,7 @@ myList[0] = 10;
 print(myList[0]);  // 输出10
 ```
 
-#### List的主要方法
+#### 1.3. List的主要方法
 
 List类提供了一些方法来处理和操作列表。
 
@@ -636,7 +681,7 @@ for(int value in numList){
 
 Dart中的Map是一种无序的键值对集合，其中的键和值都可以是任何类型。它是一个动态集合，这意味着你可以在运行时向其中添加或删除键值对。Map在很多场景下都很有用，例如，当你需要通过一种方式（键）来查找或访问数据（值）时。
 
-#### 创建和初始化Map
+#### 2.1. 创建和初始化Map
 
 在Dart中，你可以通过以下几种方式创建和初始化Map：
 
@@ -655,7 +700,7 @@ var initializedMap = {
 var mapWithConstructor = Map();
 ```
 
-#### 访问和修改Map元素
+#### 2.2. 访问和修改Map元素
 
 你可以通过键来访问和修改Map中的值：
 
@@ -671,7 +716,7 @@ myMap['key1'] = 'new value1';
 print(myMap['key1']);  // 输出 'new value1'
 ```
 
-#### Map的主要方法
+#### 2.3. Map的主要方法
 
 Map类提供了一些方法来处理和操作键值对。
 
@@ -721,7 +766,7 @@ numMap.forEach((key, value) {
 
 Dart中的Set是一种无序的、包含唯一项的集合，所有的元素都是唯一的，没有重复项。这意味着无论你尝试将同样的项目添加到Set中多少次，它都只会出现一次。
 
-#### 创建和初始化Set
+#### 3.1. 创建和初始化Set
 
 在Dart中，你可以通过以下几种方式创建和初始化Set：
 
@@ -737,7 +782,7 @@ var setWithConstructor = Set<String>();
 
 注意：如果你尝试创建一个空的Set但未指定类型，Dart会创建一个动态类型的Map。因此，为了创建一个空的Set，你需要在创建Set时提供一个类型参数。
 
-#### 添加和删除Set元素
+#### 3.2. 添加和删除Set元素
 
 使用`add`和`remove`方法向Set中添加或删除元素：
 
@@ -760,7 +805,7 @@ cnNumUnits.addAll(['拾', '佰', '仟', '萬', '亿']);
 cnNumUnits.removeAll({'元','角','分'});
 ```
 
-#### Set的主要方法
+#### 3.3. Set的主要方法
 
 Set类提供了一些方法来处理和操作集合。
 
@@ -795,6 +840,185 @@ for(int value in numSet){
   print("元素值:$value");
 }
 ```
+
+
+
+### 4. 三种聚合类型的关系
+
+首先 `List` 和 `Set` 之间可以相互转化。`Set` 中的元素是不重复的，如果 `List` 中有重复的元素，通过 `toSet` 方法转化为 `Set` 之后，可以去除重复元素，再把 `Set` 通过 `toList` 转化为 `List` ，就可以达到 `去重` 的需求。
+
+```dart
+List<String> cnNumUnits = ['零', '壹', '贰', '叁','贰', '贰'];
+Set<String> cnNumSet = cnNumUnits.toSet();
+print(cnNumSet); // {零, 壹, 贰, 叁}
+List<String> cnNumUnique  = cnNumSet.toList();
+print(cnNumUnique); // [零, 壹, 贰, 叁]
+```
+
+`List` 通过 `asMap` 方法可以返回一个 `Map` 对象。其中键是索引，值是元素值
+
+```dart
+List<String> cnNumUnits = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖'];
+Map<int,String> cnNumMap = cnNumUnits.asMap();
+print(cnNumMap);
+// {0: 零, 1: 壹, 2: 贰, 3: 叁, 4: 肆, 5: 伍, 6: 陆, 7: 柒, 8: 捌, 9: 玖}
+```
+
+通过 `Map.fromIterables` 方法，可以根据两个可迭代对象创建映射对象，前者是 `key` ，后者是 `value` 。其中 `List` 和 `Set` 都是可迭代对象，可以作为入参。
+
+```dart
+List<String> cnNumUnits = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖','拾','佰','仟','萬'];
+Set<int> numUnitsSet = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9,10,100,1000,10000};
+Map<int,String> map = Map.fromIterables(numUnitsSet,cnNumUnits);
+print(map);
+// {0: 零, 1: 壹, 2: 贰, 3: 叁, 4: 肆, 5: 伍, 6: 陆, 7: 柒, 8: 捌, 9: 玖, 10: 拾, 100: 佰, 1000: 仟, 10000: 萬}
+```
+
+`Map` 对象可以通过 `keys` 和 `values` 获取可迭代对象，再通过 `toList` 和 `toSet` 就可以获得 `List` 和 `Set` 对象。
+
+```dart
+Map<String,String> dict = {'about': '关于', 'boot': '启动', 'card': '卡片'};
+dict.keys.toList();
+dict.values.toList();
+
+dict.keys.toSet();
+dict.values.toSet();
+```
+
+
+
+## 七、异常流程
+
+### 1. 异常的捕捉
+
+通过 `try...catch...` 可以对异常进行捕捉。在 `catch` 关键字后的括号中可以回调两个参数，如下
+
+- `e` 表示异常对象，此处为 `FormatException`
+- `s` 是 `_StackTrace` 对象，用于记录异常的栈信息
+
+```dart
+void main(){
+  try{
+    task1('a');
+  }catch(e,s){
+    print("${e.runtimeType}: ${e.toString()}"); 
+    print("${s.runtimeType}: ${s.toString()}"); 
+  }
+  task2(); // Task2
+}
+
+int task1(String num){
+  return int.parse(num);
+}
+
+void task2(){
+  print("Task2");
+}
+```
+
+### 2. 自定义异常与抛出
+
+异常的顶层抽象类是 `Exception` ，其中有个 `factory` 构造。也就是说 `Exception` 可以进行构造，本质上创建的运行时类型是 `_Exception` ，可传入一个对象用于表示异常信息。
+
+- 抛出异常，通过 `throw` 关键字
+
+```dart
+void main() {
+  try {
+    getMean("about");
+  } catch (e,s) {
+    print("${e.runtimeType}: ${e.toString()}");
+    print("${s.runtimeType}: ${s.toString()}");
+  }
+}
+
+String getMean(String arg) {
+  Map<String, String> dict = {"card": "卡片", "but": "但是"};
+  String? result = dict[arg];
+  if (result == null) {
+    throw Exception("empty $arg mean in dict");
+  }
+  return result;
+}
+```
+
+- 对 `Exception` 类进行拓展
+
+自定义一个 `NoElementInDictException` 表示映射中没有相关元素的异常：
+
+```dart
+class NoElementInDictException implements Exception{
+  final String arg;
+
+  NoElementInDictException(this.arg);
+
+  @override
+  String toString() => "empty $arg mean in dict";
+}
+```
+
+- 一个方法可能抛出多种异常，如果希望明确抓取的类型种类，通过 `on/catch` 关键字创建分支。
+
+注意，允许有若干个 `on` 分支进行不同类型异常处理，对于未匹配到的异常，会走默认的 `catch` 分支。
+
+```dart
+void main() {
+  try {
+    getMean("about");
+  } on NoElementInDictException catch(e,s){
+    // 特定种类的异常处理
+  } catch (e,s) {
+    // 其余异常处理
+  }
+}
+```
+
+
+
+### 3. finally 关键字
+
+`finally` 关键字用于 `catch` 代码块之后，无论异常与否，其后代码块的逻辑总会被执行。
+
+```dart
+void foo2(){
+  try {
+    getMean("about");
+  } catch (e,s) {
+    print("${e.runtimeType}: ${e.toString()}");
+    print("${s.runtimeType}: ${s.toString()}");
+  } finally{
+    print("finally bloc call");
+  }
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

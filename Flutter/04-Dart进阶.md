@@ -2,11 +2,11 @@
 
 
 
-# 一、Dart模块化
+## 一、Dart模块化
 
 在大型软件项目中，模块化是必不可少的，它可以帮助我们更好地组织和管理代码，提高代码的可读性和可维护性。在Dart中，模块化是通过库（libraries）来实现的。
 
-## 1.库的定义与使用
+### 1. 库的使用
 
 Dart库是一种代码模块，它可以包含变量、函数、类和其他代码。一个库在其它库中通过`import`关键字导入后，库中的代码就可以被使用。
 
@@ -16,13 +16,13 @@ Dart语言自带了一些核心库，如 `dart:core`, `dart:io`, `dart:html`等�
 import 'dart:io';
 ```
 
-你也可以导入自定义的库或者第三方库。如果库在包（package）中，可以通过以下方式导入：
+也可以导入自定义的库或者第三方库。如果库在包（package）中，可以通过以下方式导入：
 
 ```dart
 import 'package:my_package/my_library.dart';
 ```
 
-## 2.创建自定义库
+### 2. 自定义库
 
 你可以创建自己的Dart库，一个库就是一个Dart源文件。该文件可以包含一些函数和类的定义。例如，你可以创建一个文件`my_library.dart`：
 
@@ -53,8 +53,6 @@ void main() {
 }
 ```
 
-## 3.导入库的一部分
-
 有时，我们可能只需要使用库中的某一部分代码。这时，我们可以使用`show`关键字来只导入需要的部分：
 
 ```dart
@@ -67,7 +65,7 @@ import 'my_library.dart' show MyClass; // 只导入MyClass
 import 'my_library.dart' hide myFunction; // 导入my_library，但不包括myFunction
 ```
 
-## 4.延迟加载（Lazy Loading）
+### 3. 延迟加载（Lazy Loading）
 
 Dart也支持延迟加载，也被称为懒加载，可以在需要时再加载和初始化模块。延迟加载可以提高应用的启动速度。你可以使用`deferred as`关键字来标记延迟加载的库：
 
@@ -85,13 +83,13 @@ void main() {
 
 
 
-# 二、Dart库的使用和创建
+## 二、Dart库的使用和创建
 
-在Dart中，代码重用和模块化可以通过库（libraries）和包（packages）实现。一个库就是一组代码，被一起打包为了实现一种或多种特定功能。一个包则是一种发布和分享Dart库的方式。在这一章，我们将详细介绍如何使用和创建Dart库和包，以及如何实现一个具有大数相加功能的库。
+在Dart中，代码重用和模块化可以通过库（libraries）和包（packages）实现。一个库就是一组代码，被一起打包为了实现一种或多种特定功能。一个包则是一种发布和分享Dart库的方式。
 
-## 1.Dart库的使用
+如果一个体系中有非常多的类，那么使用时一个个导入非常麻烦，这时可以定义库，只要引入一个库文件，就可以使用其中的所有可访问的内容。
 
-**导入库**
+### 1. 导入库
 
 在Dart中，我们通过import关键字导入库。例如，要导入Dart的内置库dart:math，我们可以这样做：
 
@@ -105,37 +103,13 @@ import 'dart:math';
 import 'package:my_app/big_numbers.dart';
 ```
 
-**使用库中的函数和类**
+### 2. Dart库的创建
 
-导入库之后，就可以使用库中定义的函数和类了。例如，dart:math库中有一个sqrt函数，我们可以这样使用它：
-
-```dart
-var squareRoot = sqrt(16);  // 输出：4.0
-```
-
-## 2.Dart库的创建
-
-**创建库文件**
-
-我们首先需要创建一个新的.dart文件。这个文件就是我们的库文件。例如，我们可以创建一个名为`big_numbers.dart`的文件。
-
-**定义库**
-
-在这个文件中，我们首先需要使用library关键字定义我们的库：
+使用library关键字定义我们的库：
 
 ```dart
 library big_numbers;
 ```
-
-然后，我们可以在这个库中定义我们的函数和类。例如，我们可以定义一个用于大数相加的函数：
-
-```dart
-String addBigNumbers(String num1, String num2) {
-  // 这里是函数的实现
-}
-```
-
-**导出库**
 
 如果我们的库中有一些函数和类是希望被其他库使用的，我们需要使用export关键字导出它们：
 
@@ -145,46 +119,9 @@ export 'src/big_numbers.dart';
 
 注意，只有导出的函数和类才能被其他库使用。
 
-## 3.实现一个大数相加的库
-
-在我们的`big_numbers.dart`库中，我们现在来实现一个大数相加的函数。我们首先需要了解一下大数相加的基本思想：
-
-对于大数相加，我们不能直接使用普通的加法运算，因为数字太大可能会溢出。因此，我们需要将大数转换为字符串，然后按位进行相加。
-
-> Dart语言提供了对大整数（BigInteger）的内置支持，即 BigInt 类。这种类型的整数可以是任意大小，只要你的计算机有足够的内存来存储它们,你可以直接使用加法运算符（+）来进行大整数的相加。
-
-让我们来看看如何实现这个函数：
-
-```dart
-String addBigNumbers(String num1, String num2) {
-  // 从最后一位（个位）开始相加
-  int i = num1.length - 1;
-  int j = num2.length - 1;
-
-  int carry = 0; // 进位
 
 
-  String result = '';
-
-  // 从右到左，逐位相加
-  while (i >= 0 || j >= 0) {
-    int sum = carry;
-    
-    if (i >= 0) sum += num1[i--] - '0';
-    if (j >= 0) sum += num2[j--] - '0';
-
-    carry = sum ~/ 10; // 计算进位
-    result = (sum % 10).toString() + result; // 计算当前位的值
-  }
-
-  // 如果最后还有进位，添加到结果的前面
-  if (carry > 0) result = carry.toString() + result;
-
-  return result;
-}
-```
-
-## 4.Dart包的创建和发布
+### 3. Dart包的创建和发布
 
 我们已经创建了一个`big_numbers.dart`库，现在我们可以将它打包为一个Dart包，并发布到pub.dev。
 
@@ -224,11 +161,11 @@ dart pub publish
 
 
 
-# 三、Dart的命令行和Web编程
+## 三、Dart的命令行和Web编程
 
 Dart是一个多平台的语言，它支持命令行编程和Web编程。下面是这两种编程方式的一些基础知识。
 
-## 1.Dart的命令行编程
+### 1. Dart的命令行编程
 
 在命令行编程中，我们主要使用`dart:io`库，这个库提供了一些与文件系统交互、网络编程、进程管理等功能的类和函数。
 
@@ -271,7 +208,7 @@ void main() async {
 }
 ```
 
-## 2.Dart的Web编程
+### 2. Dart的Web编程
 
 Dart也可以用于构建高质量的Web应用。在Web编程中，我们通常使用`dart:html`库，这个库提供了一些与DOM交互、处理事件、创建HTML元素等功能的类和函数。
 
@@ -313,7 +250,7 @@ void main() {
 // <button id="button">Click me</button>
 ```
 
-## 3.Dart编译成JavaScript
+### 3. Dart编译成JavaScript
 
 Dart语言可以被编译成JavaScript，这使得Dart能在所有的现代浏览器中运行，无论是桌面浏览器还是移动设备浏览器。Dart提供了`dart2js`和`dartdevc`两种编译工具，分别用于生产环境和开发环境。
 
@@ -343,11 +280,11 @@ webdev serve
 
 
 
-# 四、Dart中使用JSON
+## 四、Dart中使用JSON
 
 JSON (JavaScript Object Notation) 是一种轻量级的数据交换格式，它基于JavaScript的一个子集。在Dart中，你可以使用`dart:convert`库来进行JSON的编码和解码。
 
-## 1.JSON编码
+### 1. JSON编码
 
 你可以使用`jsonEncode`函数将一个`Dart对象`转换为JSON字符串。例如：
 
@@ -392,7 +329,7 @@ void main() {
 }
 ```
 
-## 2.JSON解码
+### 2. JSON解码
 
 你可以使用`jsonDecode`函数将一个JSON字符串转换为Dart对象。例如：
 
@@ -431,7 +368,7 @@ void main() {
 }
 ```
 
-## 3.使用json_serializable
+### 3. 使用json_serializable
 
 当处理复杂的JSON数据时，手动转换可能会变得繁琐并且容易出错。因此，你可能会想使用代码生成库来自动完成这部分工作。在Dart中，有一种非常流行的库就是`json_serializable`。
 
@@ -499,7 +436,7 @@ void main() {
 
 `json_serializable`提供了许多其他的功能，例如处理嵌套的模型、使用自定义的日期格式、处理枚举类型等。要了解更多信息，你可以查看其官方文档。
 
-## 4.实践
+### 4. 实践
 
 > 实际开发中，我们会将接口拿到的JSON数据转化为Dart 类 (通常被称为模型或数据类)
 
@@ -512,11 +449,11 @@ void main() {
 
 
 
-# 五、Dart的异步编程
+## 五、Dart的异步编程
 
 在 Dart 中，我们使用 `Future` 和 `async`/`await` 来进行异步编程。当你调用一个异步函数时，它将立即返回一个 `Future` 对象。当异步操作完成时，`Future` 将被“完成”或“解析”。
 
-## 1.使用 Future
+### 1. 使用 Future
 
 Future 是 Dart 中用于表示异步操作的对象。当你调用一个异步函数时，它会立即返回一个 Future 对象，表示这个异步操作的结果。
 
@@ -544,7 +481,7 @@ void main() {
 
 在这个示例中，`fetchUserOrder` 是一个异步函数，它使用 `Future.delayed` 来模拟网络延迟。当调用 `fetchUserOrder` 时，它立即返回一个 `Future<String>` 对象。然后我们使用 `then` 和 `catchError` 来处理 `Future` 的成功和错误结果。
 
-## 2.使用 async/await
+### 2. 使用 async/await
 
 你也可以使用 `async`/`await` 关键字来更简洁地处理异步操作。一个使用 `async`/`await` 的示例如下：
 
@@ -566,17 +503,17 @@ Future<void> main() async {
 
 在这个示例中，我们使用 `async` 关键字来标记 `main` 函数是一个异步函数。然后我们使用 `await` 关键字来等待 `fetchUserOrder` 的结果。如果 `fetchUserOrder` 抛出一个错误，我们可以使用 `try`/`catch` 来处理这个错误。
 
-需要注意的是，你只能在 `async` 函数中使用 `await` 关键字。
+需要注意的是，只能在 `async` 函数中使用 `await` 关键字。
 
 
 
-# 六、事件循环和协程机制
+## 六、事件循环和协程机制
 
-> Dart实现异步的方式同Javascript类似，如果你掌握Javascript的事件循环机制，那么学习Dart的异步机制就非常简单了
+> Dart实现异步的方式同 Javascript 类似，如果你掌握 Javascript 的事件循环机制，那么学习Dart的异步机制就非常简单了
 
 在 Dart 中，事件循环和协程是实现异步编程的核心机制。它们使得我们能够以非阻塞的方式处理异步操作，并允许在异步操作期间暂停和继续执行代码。本文将深入探讨 Dart 的事件循环和协程机制，并结合代码示例进行详细说明。
 
-## 1.协程（Coroutine）
+### 1. 协程（Coroutine）
 
 协程是一种轻量级的线程，它可以在程序内部进行切换，而不需要依赖操作系统的线程管理。在 Dart 中，协程的实现是通过异步函数和 await 关键字来实现的。
 
@@ -600,7 +537,7 @@ Future<String> fetchData() {
 
 当涉及到 Dart 的事件循环时，可以结合事件队列、宏任务、微任务和协程的概念来完善整体的事件循环。下面是对事件循环的完善描述：
 
-## 2.事件循环（Event Loop）
+### 2. 事件循环（Event Loop）
 
 Dart 的事件循环是一个基于事件驱动的循环机制，用于处理异步操作和事件处理。它包括以下组件：事件队列、宏任务队列、微任务队列、IO 事件处理器和异步任务处理器等。
 
@@ -650,7 +587,7 @@ Future<String> fetchData() {
 
 在上面的示例中，我们向事件队列中添加了一个定时器事件、一个 IO 事件和一个异步任务。在事件循环的处理过程中，定时器事件会在指定的延迟时间后触发，IO 事件会在文件读取完成后执行回调函数，异步任务会在 Future 完成后传递结果。
 
-## 3.协程（Coroutine）
+### 3. 协程（Coroutine）
 
 协程是一种轻量级的线程，它可以在程序内部进行切换，而不需要依赖操作系统的线程管理。在 Dart 中，协程的实现是通过异步函数和 await 关键字来实现的。
 
@@ -678,7 +615,7 @@ Future<String> fetchData() {
 
 在上面的示例中，main() 函数被标记为异步函数，使用 async 关键字进行标记。在异步函数中，我们使用 await 关键字等待 fetchData() 函数的结果。在等待期间，协程会暂停执行，并将控制权返回给事件循环。一旦 Future 完成并返回结果，协程恢复执行，并打印出结果。
 
-## 4.宏任务队列（Macrotask Queue））
+### 4. 宏任务队列（Macrotask Queue）
 
 在 Dart 中，宏任务（Macrotask）是指需要在事件循环的下一轮执行的任务。与微任务不同，宏任务的执行发生在微任务队列处理完毕后。以下是一些常见的宏任务：
 
@@ -759,7 +696,7 @@ class MyApp extends StatelessWidget {
 
 通过宏任务，我们可以在 Dart 中处理一些需要在下一轮事件循环执行的任务，例如定时器事件、IO 事件和用户交互事件。这使得我们可以在合适的时机执行这些任务，并保持事件循环的稳定性和性能。
 
-## 5.微任务队列（Microtask Queue）
+### 5. 微任务队列（Microtask Queue）
 
 Dart 中的微任务队列用于处理异步任务的回调函数。它保证异步任务的回调函数能够及时执行。常见的微任务包括 Future.then()、async/await 的回调等。
 
@@ -830,7 +767,7 @@ void main() {
 
 
 
-# 七、Dart的Stream
+## 七、Dart的Stream
 
 Stream 是 Dart 中处理连续的异步事件的工具。例如，你可以使用 Stream 来读取文件的内容，或者监听用户的鼠标点击。
 
@@ -873,7 +810,7 @@ Future<void> main() async {
 }
 ```
 
-## 1.创建 Stream
+### 1. 创建 Stream
 
 在 Dart 中，你可以使用多种方式来创建 Stream。前面我们已经见到了 `Stream.fromIterable`，下面是一些其他的方法：
 
@@ -902,7 +839,7 @@ void main() async {
 
 在这个示例中，我们首先创建了一个 `StreamController`。然后我们使用 `sink.add` 方法添加了三个事件，使用 `sink.addError` 方法添加了一个错误。最后我们使用 `controller.close` 方法表示我们不会再添加任何事件或错误。
 
-## 2.处理 Stream 事件
+### 2. 处理 Stream 事件
 
 我们可以使用 `Stream.listen` 方法监听 Stream 的事件：
 
@@ -926,7 +863,7 @@ void main() {
 
 在这个示例中，我们监听了 Stream 的数据事件、错误事件和完成事件。
 
-## 3.转换 Stream
+### 3. 转换 Stream
 
 Stream API 提供了许多方法来转换 Stream。例如，你可以使用 `map` 方法来处理每个数据事件，或者使用 `where` 方法来过滤数据事件：
 
@@ -944,7 +881,7 @@ void main() async {
 
 在这个示例中，我们首先使用 `where` 方法创建了一个只包含偶数的 Stream，然后我们使用 `map` 方法将每个偶数乘以 2。
 
-## 4.组合 Stream
+### 4. 组合 Stream
 
 你还可以使用 `StreamZip` 或 `StreamGroup` 来组合多个 Stream。例如，你可以使用 `StreamZip` 来同步处理两个 Stream 的数据事件：
 
@@ -961,7 +898,7 @@ void main() async {
 }
 ```
 
-## 5.Stream的应用场景
+### 5. Stream的应用场景
 
 好的，让我详细地解释一下上述的几个应用场景，并提供一些具体的代码示例：
 
@@ -1045,7 +982,7 @@ void main() {
 }
 ```
 
-## 5. 数据流处理
+### 5. 数据流处理
 
 在处理大量数据流时，你可以使用 Stream 创建一个数据管道，并利用其提供的 `map`、`filter`、`reduce` 等操作进行数据处理。
 
@@ -1063,11 +1000,11 @@ void main() {
 
 
 
-# 八、Dart的Isolate
+## 八、Dart的Isolate
 
 Isolate 是 Dart 中进行并发编程的一种方式。由于 Dart 是单线程模型，因此在需要处理 CPU 密集型任务或需要执行长时间运行的操作时，可以使用 Isolate。
 
-## 1.创建 Isolate
+### 1. 创建 Isolate
 
 在 Dart 中，所有的代码都运行在一个单线程中，这个线程被称为主 Isolate。如果你需要执行耗时的计算，你可以创建一个新的 Isolate，然后在这个新的 Isolate 中执行你的计算。
 
@@ -1091,7 +1028,7 @@ void main() async {
 
 需要注意的是，不同的 Isolate 之间不能共享内存，它们只能通过消息传递来进行通信。因此，你不能在一个 Isolate 中访问另一个 Isolate 的变量。
 
-## 2.消息传递
+### 2. 消息传递
 
 在 Dart 中，Isolate 之间的消息传递是通过 `SendPort` 和 `ReceivePort` 来实现的。
 
@@ -1144,7 +1081,7 @@ void main() async {
 
 需要注意的是，你只能通过 `SendPort` 发送一些简单的数据，例如数字、字符串、列表、映射等。你不能发送一个函数或者一个对象的实例。
 
-## 3.应用场景
+### 3. 应用场景
 
 Isolate 是 Dart 中进行并发编程的一种方式。由于 Dart 是单线程模型，因此在需要处理 CPU 密集型任务或需要执行长时间运行的操作时，可以使用 Isolate。
 
@@ -1197,22 +1134,20 @@ void main() async {
 
 
 
-# 九、Dart中泛型
+## 九、Dart中泛型
 
 泛型，一种强大而灵活的编程工具，可以让开发者创建可以适应任何类型的代码，同时又保持类型安全。这是在许多编程语言中都存在的一种重要的特性，Dart也不例外。在这篇文章中，我们将深入探讨Dart中的泛型。
 
-## [#](https://www.coding-time.cn/dart/advance/Dart中的泛型.html#泛型的概念)泛型的概念
+### 1. 泛型的概念
 
 在讨论泛型如何在Dart中工作之前，我们首先需要了解什么是泛型。泛型是一种编程概念，它允许我们在代码中使用占位符类型，然后在实例化类或方法时，指定这些占位符类型应该代表的实际类型。
 
-## [#](https://www.coding-time.cn/dart/advance/Dart中的泛型.html#泛型的优点)泛型的优点
+**泛型的优点**
 
 - 代码重用：泛型允许我们编写一次，然后以多种方式使用，只需通过改变我们所使用的类型即可。比如，我们可能有一个用于处理`List<int>`的方法，如果使用泛型，我们可以让这个方法同时处理`List<String>`，`List<bool>`等，而无需重写方法。
 - 类型安全：当我们使用泛型时，Dart的静态类型系统将确保我们的代码是类型安全的。我们只能将正确的类型传递给泛型类或方法，否则我们会在编译时得到一个错误。
 
-## [#](https://www.coding-time.cn/dart/advance/Dart中的泛型.html#在dart中使用泛型)在Dart中使用泛型
-
-### [#](https://www.coding-time.cn/dart/advance/Dart中的泛型.html#集合与泛型)集合与泛型
+### 2. 在Dart中使用泛型
 
 我们已经在`List<T>`和`Map<K, V>`这样的集合类型中使用过泛型，其中T、K和V是类型参数。例如：
 
@@ -1223,9 +1158,9 @@ Map<String, int> nameToAge = {'Alice': 25, 'Bob': 27};
 
 在这些例子中，泛型参数告诉Dart集合中应该存储哪种类型的数据。在`List<int>`中，泛型参数是`int`，表示列表只能包含整数。在`Map<String, int>`中，有两个泛型参数，`String`和`int`，表示这个映射的键是字符串，值是整数。
 
-### [#](https://www.coding-time.cn/dart/advance/Dart中的泛型.html#创建泛型类)创建泛型类
+### 3. 创建泛型类
 
-你也可以在你自己的类中使用泛型。在类定义中，只需在类名后面加上尖括号（<>）和一个或多个类型参数即可。例如：
+你也可以在你自己的类中使用泛型。在类定义中，只需在类名后面加上尖括号（<>）和一个或多个类型参数即可。`泛型` 的个数可以是任意的，在 `<>` 内通过 `,` 号隔开即可。例如：
 
 ```dart
 class Box<T> {
@@ -1242,13 +1177,9 @@ var box = Box<int>(10);
 print(box.getValue());  // Output: 10
 ```
 
-在上述代码中，我们定义了一个名为`Box`的泛型类，该类可以保存任何类型的值。然后，我们创建了一个新的`Box<int>`实例，并传入了一个整数。`getValue`方法返回这个整数。如果我们试图将非整数类型的值传递给`Box<int>`，D
+### 4. 泛型函数和方法
 
-art将报错，因为`Box<int>`只接受整数。
-
-### [#](https://www.coding-time.cn/dart/advance/Dart中的泛型.html#创建泛型函数和方法)创建泛型函数和方法
-
-你可以在函数或方法上使用泛型。在函数或方法名后面加上尖括号（<>）和一个或多个类型参数即可。例如：
+在函数或方法名后面加上尖括号（<>）和一个或多个类型参数即可。例如：
 
 ```dart
 T first<T>(List<T> items) {
@@ -1259,9 +1190,7 @@ print(first<int>([10, 20, 30]));  // Output: 10
 print(first<String>(['Alice', 'Bob', 'Charlie']));  // Output: Alice
 ```
 
-在上述代码中，我们创建了一个名为`first`的泛型函数，该函数接受一个特定类型的列表，并返回第一个元素。我们使用不同类型的列表调用了这个函数，每次都正确地返回了第一个元素。
-
-## [#](https://www.coding-time.cn/dart/advance/Dart中的泛型.html#泛型和类型推断)泛型和类型推断
+### 5. 泛型和类型推断
 
 Dart的类型推断能力意味着我们通常不需要显式指定泛型类型，Dart可以根据上下文自动推断出正确的类型。例如：
 
@@ -1272,31 +1201,58 @@ var nameToAge = {'Alice': 25, 'Bob': 27};  // Map<String, int>
 
 在这些例子中，尽管我们没有显式指定泛型类型，但Dart还是能够推断出`numbers`是`List<int>`，`nameToAge`是`Map<String, int>`。
 
-## [#](https://www.coding-time.cn/dart/advance/Dart中的泛型.html#总结)总结
+### 6. 类型范围限制
 
-泛型是Dart强大的类型系统的一个重要组成部分。使用泛型可以帮助我们编写更灵活、更重用性强的代码，同时又保持了类型安全。对泛型的理解和正确使用，将极大地提升你的Dart编程能力。
+由于在定义时类型未定，在类型使用时就会有一定的限制性，比如泛型是 `T` ，在类中定义 `T` 类型的对象可访问的细节是很少的，只能调用 `runtimeType` 和 `toString` 等任何类型都存在的方法。这并不利于逻辑的封装，有没有什么方式来限定 `T` 的类型范围呢？
 
-[在 GitHub 上编辑此页open in new window](https://github.com/linwu-hi/coding-time/edit/main/docs/dart/advance/Dart中的泛型.md)
+通过 `extends` 关键字来指定 `T` 的类型范围，这样在使用时只有 `Shape` 及其衍生类可以被指定为 `CClass` 的类型。
 
-上次编辑于: 2023/7/9 10:59:11
+```dart
+class CClass<T extends Shape>{
+  final T memberT;
+  CClass(this.memberT);
+  
+  void draw(){
+    memberT.draw();
+  }
+}
+
+void main(){
+  // CClass<int> obj = CClass(99); // ERROR,泛型必须是 Shape 派生类 
+  CClass<Circle> obj = CClass(Circle(Vec2(0,2)));
+}
+```
+
+### 7. 类型判定和转化
+
+可以通过 `is` 关键字来校验一个对象是否是某个类型。注意，派生类对象可视为基类对象，这点对于 `extend` 、`implements` 、`with` 三种关系都适用。也就是说，当一个类 `继承`、`实现` 或 `混入` 某个类，可视为该类型。
+
+```dart
+void main(){
+  Rectangle rectangle = Rectangle(Vec2(10,10));
+  print(rectangle is Shape); // true
+}
+```
+
+派生类型可以为基类型变量赋值，这是一种 `屏蔽 `特性的操作。但基类型想变成派生类型，属于添加特性，是不能直接允许的。就像是从多可以到少只需要放弃就行，但从少到多可以需要付出代价。我们可以通过 `as` 关键字对类型进行强制转换：
+
+```dart
+void main(){
+  Shape circle = Circle(Vec2(10,10));
+	Circle c = circle as Circle;
+	print(c.radius); // 10.0
+}
+```
+
+强转不能乱转，具有一定的风险性，你必须明确当前类型肯定是目标类型才能强转，否则会出现转换异常。
 
 
 
+## 十、空安全
 
-
-
-
-# 十、空安全
-
-> 更强的类型系统，更少的错误
-
-近些年来，编程语言的类型安全性已经成为软件开发社区的一个主要焦点。通过利用类型安全，开发人员可以更好地预防错误，简化代码，并提高程序的整体性能和可靠性。Dart是一个被设计为安全、可扩展和高效的现代化编程语言，近期其发布了一项重要的更新：空安全。
-
-## 1.空安全是什么？
+### 1. 空安全是什么
 
 空安全是指编程语言的类型系统能够区分可为空的类型和不能为空的类型。这种区别可以防止空引用错误（Null Reference Errors），也称为 "null pointer exceptions" 或 "the billion-dollar mistake"。空引全错误是软件开发中最常见的错误之一，它们在运行时发生，常常会导致程序的崩溃或其他严重的问题。
-
-## 2.Dart 的空安全
 
 Dart 2.12 版本引入了空安全。在引入空安全之前，Dart 任何对象都可以为空。然而，这种设计虽然看起来灵活，但实际上会引起很多问题，尤其是当开发者假设某个值不会为空，但实际上它为空时。由于这样的错误通常在运行时才会被检测到，所以它们通常很难发现和修复。
 
@@ -1304,7 +1260,7 @@ Dart 2.12 版本引入了空安全。在引入空安全之前，Dart 任何对�
 
 例如，`String` 类型的对象不能为 `null`，而 `String?` 类型的对象可以为 `null`。Dart 会在编译时检查代码，确保所有的非空类型的变量在使用之前都已经被初始化，并且不会被赋值为 `null`。
 
-## 3.可空和非空类型
+### 2. 可空和非空类型
 
 在空安全中，所有类型默认都是非空的。例如，如果你声明一个 `String` 类型的变量，Dart会假设它永远不会为空。如果你想声明一个可以为空的 `String`，你需要在类型后面加上 `?`，如 `String?`。
 
@@ -1313,13 +1269,14 @@ String nonNullableString = 'Hello, Dart!'; // 非空类型
 String? nullableString = null; // 可空类型
 ```
 
-## 4.处理可空值
+### 3. 处理可空值
 
 当你处理一个可能为空的值时，Dart 提供了几种方式来帮助你。例如，你可以使用 `??` 操作符来提供一个默认值，当变量为空时，将会使用这个默认值。
 
 ```dart
 String? nullableString = null;
-String nonNullableString = nullableString ?? 'Default String'; // 如果nullableString为null，那么将使用'Default String'
+// 如果nullableString为null，那么将使用'Default String'
+String nonNullableString = nullableString ?? 'Default String'; 
 ```
 
 另外，Dart 也提供了 `?.` 操作符，允许你在对象为空时跳过方法调用或属性访问，避免抛出空引用错误。
@@ -1329,23 +1286,119 @@ String? nullableString = null;
 int? length = nullableString?.length; // 如果nullableString为null，那么length也将为null
 ```
 
+ `late` 关键字延迟初始化的时机
+
+```dart
+class Parson {
+  late String name;
+  
+  void say() {
+    print("$name")
+  }
+}
+```
+
+`!` 语法点，这和 `late` 类似，都是一种允诺，它用于可空变量之后，允诺的是 `在此时该可用变量一定不为空` 。
+
+```dart
+String? name;
+say(name!);
+
+void say(String name) {}
+```
 
 
-# 十一、单元测试和集成测试
 
-[linwu](https://www.coding-time.cn/)2023年7月9日大约 2 分钟
+## 十一、特殊类型
 
-------
+### 1. 枚举
+
+枚举作为一种比较特殊的类型，本身很简单，它是一个有限元素的状态序列集。
+
+```dart
+enum GenderType{
+  male,
+  female,
+  secrecy,
+}
+```
+
+在使用时可以像类一样声明枚举对象，通过 `枚举名.元素` 表示一个枚举对象。任何枚举类型都可以通过 `values` 方法获取其所有元素在一块的列表。
+
+```dart
+void main() {
+  GenderType type = GenderType.male;
+  List<GenderType> li = GenderType.values;
+}
+```
+
+由于枚举是天然的 `有限元` ,所以和 `switch` 分支语句是非常契合的
+
+```dart
+String showInfoByGenderType(GenderType type){
+  switch(type){
+    case GenderType.male:
+      return "男性";
+    case GenderType.female:
+      return "女性";
+    case GenderType.secrecy:
+      return "保密";
+  }
+}
+```
+
+### 2. 函数类型
+
+在 `Dart` 语法中函数也可以作为一种类型，如下所示，`addFun` 是一个函数对象，它相当于变量，拥有自己的类型。使用 `runtimeType` 可以看到运行时类型，使用小括号也可以通过函数对象调用函数。
+
+```dart
+main() {
+  var addFun = (int a, int b){
+    return a + b;
+  };
+  print(addFun.runtimeType); // (int, int) => int
+  print(addFun(10,20)); // 30
+}
+```
+
+在类中将函数对象作为成员变量时，首先我们需要明确函数类型是什么，所以如何定义一个函数类型是非常重要的。可以通过 `typedef` 来定义一个函数类型：
+
+```dart
+typedef OperationFun = int Function(int a,int b);
+
+main() {
+  OperationFun addFun = (int a, int b){
+    return a + b;
+  };
+  
+  print(addFun.runtimeType);
+  print(addFun(10,20));
+}
+```
+
+通过函数类型的定义，就可以将函数类型视为普通类型，在类中进行维护。函数既然可以作为对象，那自然可以作为参数传入到函数中。
+
+```dart
+class Operation {
+  final OperationFun add;
+
+  Operation({required this.add});
+}
+```
+
+
+
+## 十二、单元测试和集成测试
 
 Dart的生态系统提供了一个完善的测试框架来进行代码的单元测试和集成测试。
 
-## [#](https://www.coding-time.cn/dart/advance/Dart测试.html#dart单元测试)Dart单元测试
+### 1. 单元测试
 
 单元测试是在软件开发中进行的最小单元的测试。在Dart中，我们可以使用内置的`test`包来进行单元测试。
 
-### [#](https://www.coding-time.cn/dart/advance/Dart测试.html#安装测试包)安装测试包
+**安装测试包**
 
-首先，我们需要在pubspec.yaml中添加`test`的依赖：
+首先，在pubspec.yaml中添加`test`的依赖：
 
 ```yaml
 dev_dependencies:
@@ -1354,9 +1407,9 @@ dev_dependencies:
 
 然后运行 `dart pub get` 命令来安装依赖包。
 
-### [#](https://www.coding-time.cn/dart/advance/Dart测试.html#创建测试)创建测试
+**创建测试**
 
-然后，我们可以创建一个新的Dart文件来写我们的测试，这个文件通常放在项目的`test`目录下，并且以`_test.dart`结尾。
+创建一个新的Dart文件来写我们的测试，这个文件通常放在项目的`test`目录下，并且以`_test.dart`结尾。
 
 例如，我们可以创建一个文件`test/big_numbers_test.dart`来测试我们之前写的大数相加的函数。
 
@@ -1372,21 +1425,21 @@ void main() {
 }
 ```
 
-### [#](https://www.coding-time.cn/dart/advance/Dart测试.html#运行测试)运行测试
+**运行测试**
 
-然后，我们可以运行`dart test`命令来执行我们的测试：
+运行`dart test`命令来执行我们的测试：
 
 ```bash
 dart test
 ```
 
-## [#](https://www.coding-time.cn/dart/advance/Dart测试.html#dart集成测试)Dart集成测试
+### 2. 集成测试
 
 集成测试是对多个组件或整个系统进行的测试。在Dart中，我们可以使用`flutter_test`包进行集成测试。
 
-### [#](https://www.coding-time.cn/dart/advance/Dart测试.html#安装测试包-1)安装测试包
+**安装测试包**
 
-首先，我们需要在pubspec.yaml中添加`flutter_test`的依赖：
+在 `pubspec.yaml` 中添加`flutter_test`的依赖：
 
 ```yaml
 dev_dependencies:
@@ -1396,9 +1449,9 @@ dev_dependencies:
 
 然后运行 `dart pub get` 命令来安装依赖包。
 
-### [#](https://www.coding-time.cn/dart/advance/Dart测试.html#创建测试-1)创建测试
+**创建测试**
 
-然后，我们可以创建一个新的Dart文件来写我们的测试，这个文件通常放在项目的`test`目录下。
+创建一个新的Dart文件来写我们的测试，这个文件通常放在项目的`test`目录下。
 
 例如，我们可以创建一个文件`test/app_test.dart`来测试我们的整个应用：
 
@@ -1426,15 +1479,97 @@ void main() {
 }
 ```
 
-### [#](https://www.coding-time.cn/dart/advance/Dart测试.html#运行测试-1)运行测试
+**运行测试**
 
-然后，我们可以运行`flutter test`命令来执行我们的测试：
+运行`flutter test`命令来执行我们的测试：
 
 ```bash
 flutter test
 ```
 
-[在 GitHub 上编辑此页](https://github.com/linwu-hi/coding-time/edit/main/docs/dart/advance/Dart测试.md)
+
+
+## 十三、文件管理
+
+
+
+### 1. 类文件的引用: import
+
+将类单独提取到文件中，这样的好处是表意更加清晰，也可以避免一个文件中定义过多类而产生不必要的复杂性，导致阅读困难。当一个类中使用到另一个类，可以通过 `import` 关键字进行导入文件。导入的路径支持 `绝对路径` 和 `项目中绝对路径`。
+
+```dart
+import '../vec/vec2.dart'; // 相对路径
+import 'package:idream/grammar/package/01/vec/vec2.dart'; // 项目中绝对路径
+```
+
+一般来说，某个模块中的文件间通过 `相对路径` 比较简洁；对其他模块中的类进行引用通过 `绝对路径` 。
+
+当引入的两个文件中包含同名的类、全局变量、全局函数时，就会出现引用的冲突。`Dart` 在引入的语法中提供了 `as` 关键字来为引入文件 `起别名` 进行区分。
+
+```dart
+import 'conflict1.dart';
+import 'conflict2.dart' as c2;
+
+void main(){
+  Conflict conflict1 = Conflict("Conflict1");
+  c2.Conflict conflict2 = c2.Conflict("Conflict2");
+}
+```
+
+### 2. 文件内容的显隐：show 与 hide
+
+被引入文件中的`类` 及其 `成员` 名称如果以 `_` 开头，无法被访问到。除此之外，文件中 `_` 开头的全局变量和方法也无法被访问到。有时候，我们并不想把一个文件中定义的所有类暴露给外界，又不想以 `_` 开头。这时可以通过关键字 `show` 和 `hide` 来手动管理需要显示或隐藏的内容。
+
+```dart
+import 'a_file.dart' hide kName;
+import 'b_file.dart' show say,Temp;
+```
+
+### 3. 部分与整体： part of 与 part
+
+`part of` 是一种将部分代码分离到另一个文件中的手段，但逻辑上该文件仍属于宿主文件。
+
+其中通过 `part` 关键字表示指定文件是当前文件的一部分。另外在部分的文件中使用 `part of` 关键字表示归属关系。
+
+从中可以看出，`human.dart` 中可以访问 `part` 文件中的私有对象。也就表明 `part` 文件在逻辑上就相当于在宿主文件中。这样在需要分离文件，又想访问 `part` 文件中的私有成员场景下是非常有用的。
+
+```dart
+// human.dart
+part 'body.dart';
+part 'head.dart';
+
+class Human {
+  log() {
+    print("$_bodyName:$_headName");
+  }
+}
+```
+
+```dart
+part of 'human.dart';
+
+String _headName = "head";
+```
+
+```dart
+part of 'human.dart';
+
+String _bodyName = "body";
+```
+
+另外， `part` 文件中不允许提供 `import` 关键字；但在宿主类中导入的包，都可以在 `part` 文件中使用。
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

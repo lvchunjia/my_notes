@@ -1,33 +1,18 @@
-# Widget和布局
-
-[linwu](https://www.coding-time.cn/)2023年7月9日大约 3 分钟
-
-------
-
-此页内容
-
-- [Widget：Flutter用户界面的构建块](https://www.coding-time.cn/dart/flutter/Widget.html#widget-flutter用户界面的构建块)
-- - [StatelessWidget](https://www.coding-time.cn/dart/flutter/Widget.html#statelesswidget)
-  - [StatefulWidget](https://www.coding-time.cn/dart/flutter/Widget.html#statefulwidget)
-- [布局组件：构建灵活的用户界面](https://www.coding-time.cn/dart/flutter/Widget.html#布局组件-构建灵活的用户界面)
-- - [Container](https://www.coding-time.cn/dart/flutter/Widget.html#container)
-  - [Row和Column](https://www.coding-time.cn/dart/flutter/Widget.html#row和column)
-  - [Stack](https://www.coding-time.cn/dart/flutter/Widget.html#stack)
-  - [ListView](https://www.coding-time.cn/dart/flutter/Widget.html#listview)
-  - [Expanded](https://www.coding-time.cn/dart/flutter/Widget.html#expanded)
-- [结论](https://www.coding-time.cn/dart/flutter/Widget.html#结论)
-
 > Flutter的布局与HTML/CSS布局方式上的写法有很大的不同，Flutter使用基于组件树的布局模型，其中每个组件都有自己的布局和渲染逻辑。相比之下，HTML/CSS使用基于盒模型的布局，其中元素通过框模型和定位属性进行布局。
 
-## [#](https://www.coding-time.cn/dart/flutter/Widget.html#widget-flutter用户界面的构建块)Widget：Flutter用户界面的构建块
+
+
+## 一、Widget：Flutter 用户界面的构建块
 
 在Flutter中，一切皆是Widget。Widgets是Flutter用户界面的基本构建块，用于描述应用程序在给定其当前配置和状态的情况下应该如何显示。通过组合不同的Widget，我们可以构建出复杂、美观的用户界面。
 
 Flutter中的Widget分为两类：
 
-### [#](https://www.coding-time.cn/dart/flutter/Widget.html#statelesswidget)**StatelessWidget**
+### 1. StatelessWidget
 
-StatelessWidget是不可变的，一旦创建就不能更改。它们通常用于表示那些没有状态改变的静态UI元素。例如，`Icon`、`Text`、`Container`等都是无状态的Widget。
+`StatelessWidget` 是抽象类，继承自 `Widget` 。本身的源码是非常简单的，其中只有一个 `build` 抽象方法用来构建组件，进行返回。也就是说，`StatelessWidget` 的派生类必须实现 `build` 方法，返回组件。
+
+`StatelessWidget` 是不可变的，一旦创建就不能更改。它们通常用于表示那些没有状态改变的静态UI元素。例如，`Icon`、`Text`、`Container`等都是无状态的Widget。
 
 ```dart
 class MyStatelessWidget extends StatelessWidget {
@@ -40,9 +25,9 @@ class MyStatelessWidget extends StatelessWidget {
 }
 ```
 
-### [#](https://www.coding-time.cn/dart/flutter/Widget.html#statefulwidget)**StatefulWidget**
+### 2. StatefulWidget
 
-StatefulWidget是有状态的，可以根据应用程序的状态和用户交互来改变。当状态发生变化时，StatefulWidget会自动重绘UI。常见的有状态Widget包括按钮、输入框、列表等。
+`StatefulWidget`是有状态的，可以根据应用程序的状态和用户交互来改变。当状态发生变化时，`StatefulWidget`会自动重绘 UI 。常见的有状态Widget包括按钮、输入框、列表等。
 
 ```dart
 class MyStatefulWidget extends StatefulWidget {
@@ -67,13 +52,19 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 }
 ```
 
-更多关于Widget的信息，你可以参考[Flutter Widget介绍open in new window](https://flutter.dev/docs/development/ui/widgets)。
+`StatefulWidget` 继承自 `Widget` 的抽象类，其中定义了 `createState` 抽象方法，返回 `State` 对象。`State` 是一个抽象类，其中只有一个 `build` 抽象方法，返回 `Widget` 对象
 
-## [#](https://www.coding-time.cn/dart/flutter/Widget.html#布局组件-构建灵活的用户界面)布局组件：构建灵活的用户界面
+对于 `Widget` 来说，有个约定：`所有组件的成员属性必须是不可变的` ，也就是说都需要通过 `final` 进行修饰。无论任何 `Widget` 的衍生类都是如此，即便是 `StatefulWidget` 一族组件 。`Flutter` 框架中 `Widget` 只作为对界面结构的配置描述，一旦一个 `Widget` 对象创建之后，就不允许对其成员属性进行任何修改。这本质上是 `final` 关键字的限制。
+
+想要更新界面中文字的内容，唯一的方式就是给出新的配置信息，改变文字对象。又因为 `Widget` 派生类不允许修改任何成员，所以修改数据的过程就无法在 `Widget` 派生类中完成。这就是 `State` 类诞生的原由：我们需要有一处地方，可以修改数据，并触发重新构建界面的逻辑，实现界面更新。
+
+
+
+## 二、布局组件：构建灵活的用户界面
 
 在Flutter中，有多种布局组件可供选择，用于在屏幕上排列和定位Widget。
 
-### [#](https://www.coding-time.cn/dart/flutter/Widget.html#container)**Container**
+### 1. Container
 
 Container是一个多功能的容器，可以用于装饰、定位和约束其子Widget。你可以设置它的大小、颜色、边距等。
 
@@ -86,7 +77,7 @@ Container(
 )
 ```
 
-### [#](https://www.coding-time.cn/dart/flutter/Widget.html#row和column)**Row和Column**
+### 2. Row和Column
 
 Row和Column是用于水平和垂直排列子Widget的强大布局组件。你可以在它们内部添加各种子Widget，并使用`mainAxisAlignment`和`crossAxisAlignment`来调整对齐方式。
 
@@ -151,10 +142,21 @@ Row(
 
 这只是布局组件中的几个例子，Flutter提供了丰富的布局组件，适应各种不同的UI需求。你可以根据需要选择合适的布局组件。
 
-要了解更多关于布局的内容，你可以参考[Flutter布局指南open in new window](https://flutter.dev/docs/development/ui/layout)。
+更多关于布局的内容，你可以参考[Flutter布局指南open in new window](https://flutter.dev/docs/development/ui/layout)。
 
-## [#](https://www.coding-time.cn/dart/flutter/Widget.html#结论)结论
 
-通过理解Widget和常用布局组件，你已经迈出了构建Flutter应用程序的第一步。Widget作为Flutter用户界面的构建块，帮助我们构建出灵活、交互丰富的应用程序。布局组件则允许我们在屏幕上排列和定位Widget，创建出美观、一致的用户界面。
 
-[在 GitHub 上编辑此页open in new window](https://github.com/linwu-hi/coding-time/edit/main/docs/dart/flutter/Widget.md)
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -54,6 +54,68 @@ flutter run
 
 项目运行之后，可以看到模拟器上展示了一个计数器应用，随着点击右下角的按钮，中间的数字会进行自加。这就是默认的计数器项目。
 
+## 3. 项目结构
+
+### 3.1. 各平台文件夹
+
+六个平台的项目包，其中每个包都是独立的项目。 `Flutter` 的价值在于为各平台项目提供统一的界面交互，并构建各平台可运行的应用产物。
+
+`Flutter` 本身是六个项目的集合体，使用各平台开发的 `IDE` 可以单独运行相关平台项目。`Flutter` 本质上是以一种 `三方库` 的形式，集成在平台中，提供界面表现的一种技术。只不过 `Flutter` 可以使用 `Dart` 语言进行逻辑处理，就有种`“反客为主”`的感觉。一般而言，对于应用程序，最重要的功能就是界面的呈现与交互，所以可以说 `Flutter` 抢了各平台原生视图的`“饭碗”`。
+
+而各个平台抛除 `视图呈现` 之外，只剩下一些平台的特殊功能。比如蓝牙连接、电池电量、音视频解码、数据库操作等。这些虽然可以由 `平台项目` 提供功能，但为了功能的独立性和可复用性，一般使用 `插件` 的形式提供功能。这种 `“可插拔”` 的方式集成功能，也是编程思维的一种体现形式。所以这就导致：`Flutter` 项目中的平台项目，一般只起到构建配置的作用，比如权限、运行设备最低版本、应用图标、名称等，而不承担代码编写的职能。
+
+## 4. lib 文件夹
+
+`Flutter` 对于界面的构建代码集中在 `lib` 文件夹中，这里 `main.dart` 文件中的代码，决定着运行时应用的界面表现。
+
+序的入口文件可以进行修改，在 `AndroidStudio` 中，点击 `Edit Configurations...` 可以弹出运行相关的配置界面，在 `Dart entrypoint` 栏可以选择对应的 `main.dart` 入口文件。
+
+## 5. pubspec.yaml 文件
+
+这个文件用于对项目进行配置，其中 `name` 表示项目名称，值得注意一点：在使用项目绝对路径时，`"package:idream"` 中的 `idream` 就是由这个字段确定的。也就是说，当这个名称改变时，项目中所有的绝对路径方式 `"import"` 的语句都会出错。
+
+在 `dependencies` 节点下可以引入三方依赖库，这对于开发者而言是非常重要的。毕竟很多公共的基础功能并不需要从零开始，比如网络访问、数据库支持、分享等。可以通过引入三方库，借助别人的力量，站在巨人的肩膀上。这就是一项技术 `“生态”` 的重要一环，最常用的仓库是 [【pub.dev】](https://pub.dev/) ，访问不了的话，也可以用中文镜像 [【pub.flutter-io.cn】](https://pub-web.flutter-io.cn/)。
+
+最后一段是资源文件的配置，比如一些图片、字体、文本等静态资源，需要配置之后才能访问。一般而言，我们会在根目录下新建一个 `assets` 文件夹用于盛放这些资源文件。但这并不是强制性的，只要资源配置时路径填写正确即可。
+
+```dart
+name: idream # 项目名称
+description: A dream start of Flutter. # 描述信息
+publish_to: 'none' # 是应用程序，不是发布到 pub 的三方库，这里填 none 
+version: 1.0.0+1 # 应用版本
+
+environment:
+  sdk: ">=2.17.0 <3.0.0" # Dart SDK 适用版本范围
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^1.0.0
+    
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/data/
+    - assets/images/head_icon/
+    - assets/images/widgets/
+    - assets/flutter.db
+    - assets/version.json
+
+  fonts: # 配置字体，可配置多个，支持ttf和otf,ttc等字体资源
+    - family: CHOPS
+      fonts:
+        - asset: assets/fonts/CHOPS.TTF
+    - family: TolyIcon
+      fonts:
+        - asset: assets/iconfont/iconfont.ttf
+```
+
 
 
 # 三、AndroidStudio辅助工具
@@ -78,7 +140,7 @@ flutter run
 
 # 四、计数器代码分析
 
-去除注释之后，计数器项目也就 `68 行` 代码，算是一个非常简单的小项目，但它完成了一个基本的功能交互。可谓麻雀虽小五脏俱全。一开始是 `main` 方法，表示程序的入口，其中先创建 `MyApp` 类型对象，并将该对象作为参数传入 `runApp` 函数中。
+去除注释之后，计数器项目也就 `68 行` 代码，算是一个非常简单的小项目，但它完成了一个基本的功能交互。可谓麻雀虽小五脏俱全。一开始是 `main` 方法，表示程序的入口，其中先创建 `MyApp` 类型对象，并将该对象作为参数传入 `runApp` 函数中。也就是说 `MyApp` 是决定界面显示的类。
 
 ```dart
 void main() {
