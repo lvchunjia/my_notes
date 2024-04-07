@@ -2,7 +2,7 @@
 
 
 
-## 一、Widget：Flutter 用户界面的构建块
+## 一、Widget
 
 在Flutter中，一切皆是Widget。Widgets是Flutter用户界面的基本构建块，用于描述应用程序在给定其当前配置和状态的情况下应该如何显示。通过组合不同的Widget，我们可以构建出复杂、美观的用户界面。
 
@@ -60,9 +60,35 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
 
 
-## 二、布局组件：构建灵活的用户界面
+## 二、布局组件
 
-在Flutter中，有多种布局组件可供选择，用于在屏幕上排列和定位Widget。
+### 0. 布局的重点：约束
+
+约束是 `Flutter` 布局的 `独有特性` ，也是对布局来说`最`为重要的概念。约束，就是`限制条件`。 那么`Flutter` 的约束 `限制的是什么` 。
+
+`Flutter `中的约束通过 `Constraints` 类进行抽象，其中只有 `BoxConstraints` 和 `SliverConstraints` 两种实现类。 `SliverConstraints` 是在滑动中的约束，非滑动组件中的约束指的都是盒约束 `BoxConstraints`。
+
+```dart
+class BoxConstraints extends Constraints {
+  /// Creates box constraints with the given constraints.
+  const BoxConstraints({
+    this.minWidth = 0.0,
+    this.maxWidth = double.infinity,
+    this.minHeight = 0.0,
+    this.maxHeight = double.infinity,
+  });
+}
+```
+
+从上面 `BoxConstraints` 定义中可以看出，其本质就是维护 `宽高 `两个维度的 `范围`。`父级传递约束` 就是用来 `确定子级尺寸 `的，另外约束在布局中的一大特点是 `传递性`。
+
+对与父子孙三级组件，子所 `受到的约束` 是由 `父` 传递的。该约束会用来确定 `子` 的尺寸，并且不同组件确定尺寸的逻辑不同，这个逻辑就是其布局的 `尺寸特性`。
+
+同理，`子` 会也会传给 `孙` 一个约束，用于限制 `孙` 的尺寸，并且不同组件确定传递约束的逻辑不同，这个逻辑就是其布局的 `约束特性`。
+
+`尺寸` 和 `约束` 是所有布局组件都会有的特性，至于偏移量，只有某些组件会有。比如 `Align` 、`Padding` 等，可以让子级相对于区域左上角产生偏移。
+
+
 
 ### 1. Container
 
